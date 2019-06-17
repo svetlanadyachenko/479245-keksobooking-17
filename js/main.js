@@ -3,17 +3,16 @@
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-var similarListElement = document.querySelector('.map__pin');
-var similarAdTemplate = document.querySelector('#pin');
-
+var similarListElement = document.querySelector('.map__pins');
+var similarAdTemplate = document.querySelector('#pin')
+.content
+.querySelector('.map__pin');
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 var AVATARS = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png', 'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
-var LOCATIONS_X = getRandomNumber(0, 1200);
-var LOCATIONS_Y = getRandomNumber(130, 630);
 var AD_QUANTITY = 8;
 
 var getRandomElement = function (array) {
@@ -23,10 +22,15 @@ var getRandomElement = function (array) {
 var getAdsData = function (quantity) {
   var ads = [];
   for (var i = 0; i < quantity; i++) {
+    // var LOCATIONS_X = getRandomNumber(0, 1200);
+    // var LOCATIONS_Y = getRandomNumber(130, 630);
     var tag = {
       author: getRandomElement(AVATARS),
       offer: getRandomElement(TYPES),
-      location: 'left' + ':' + ' ' + LOCATIONS_X + 'px, ' + 'top' + ':' + ' ' + LOCATIONS_Y + 'px'
+      location: {
+        left: getRandomNumber(0, 1200) + 'px' + ';',
+        top: getRandomNumber(130, 630) + 'px' + ';'
+      }
     };
     ads[i] = tag;
   }
@@ -38,9 +42,11 @@ var ads = getAdsData(AD_QUANTITY);
 var renderAd = function (ad) {
   var adElement = similarAdTemplate.cloneNode(true);
 
-  adElement.querySelector('#pin').style = ad.location;
-  adElement.querySelector('#pin').picture.src = ad.author;
-  adElement.querySelector('#pin').picture.alt = ad.offer;
+  adElement.querySelector('.map__pin').style.left = ad.location.left;
+  adElement.querySelector('.map__pin').style.top = ad.location.top;
+  adElement.querySelector('.map__pin').picture.src = ad.author;
+  adElement.querySelector('.map__pin').picture.alt = ad.offer;
+
 
   return adElement;
 };
