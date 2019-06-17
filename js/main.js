@@ -26,8 +26,10 @@ var getAdsData = function (quantity) {
     var tag = {
       author: getRandomElement(AVATARS),
       offer: getRandomElement(TYPES),
-      locationX: getRandomNumber(0, 1200),
-      locationY: getRandomNumber(130, 630)
+      location: {
+        x: getRandomNumber(0, 1200),
+        y: getRandomNumber(130, 630)
+      }
     };
     ads[i] = tag;
   }
@@ -39,7 +41,7 @@ var ads = getAdsData(AD_QUANTITY);
 var renderAd = function (ad) {
   var adElement = similarAdTemplate.cloneNode(true);
 
-  adElement.style = 'left' + ':' + ' ' + (ad.locationX + (AD_WIDTH / 2)) + 'px' + ';' + ' ' + 'top' + ':' + ' ' + ad.locationY + 'px' + ';';
+  adElement.style = 'left' + ':' + ' ' + (ad.location.x + (AD_WIDTH / 2)) + 'px' + ';' + ' ' + 'top' + ':' + ' ' + ad.location.y + 'px' + ';';
   adElement.querySelector('.map__pin img').src = ad.author;
   adElement.querySelector('.map__pin img').alt = ad.offer;
 
