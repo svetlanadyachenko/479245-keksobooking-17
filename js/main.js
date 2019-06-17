@@ -14,6 +14,7 @@ var getRandomNumber = function (min, max) {
 var AVATARS = ['img/avatars/user01.png', 'img/avatars/user02.png', 'img/avatars/user03.png', 'img/avatars/user04.png', 'img/avatars/user05.png', 'img/avatars/user06.png', 'img/avatars/user07.png', 'img/avatars/user08.png'];
 var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AD_QUANTITY = 8;
+var AD_WIDTH = 50;
 
 var getRandomElement = function (array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -22,14 +23,12 @@ var getRandomElement = function (array) {
 var getAdsData = function (quantity) {
   var ads = [];
   for (var i = 0; i < quantity; i++) {
-    // var LOCATIONS_X = getRandomNumber(0, 1200);
-    // var LOCATIONS_Y = getRandomNumber(130, 630);
     var tag = {
       author: getRandomElement(AVATARS),
       offer: getRandomElement(TYPES),
       location: {
-        left: getRandomNumber(0, 1200) + 'px' + ';',
-        top: getRandomNumber(130, 630) + 'px' + ';'
+        x: (getRandomNumber(0, 1200) + (AD_WIDTH / 2)) + 'px' + ';',
+        y: getRandomNumber(130, 630) + 'px' + ';'
       }
     };
     ads[i] = tag;
@@ -42,11 +41,10 @@ var ads = getAdsData(AD_QUANTITY);
 var renderAd = function (ad) {
   var adElement = similarAdTemplate.cloneNode(true);
 
-  adElement.querySelector('.map__pin').style.left = ad.location.left;
-  adElement.querySelector('.map__pin').style.top = ad.location.top;
-  adElement.querySelector('.map__pin').picture.src = ad.author;
-  adElement.querySelector('.map__pin').picture.alt = ad.offer;
-
+  adElement.style.left = ad.location.x;
+  adElement.style.top = ad.location.y;
+  adElement.querySelector('.map__pin img').src = ad.author;
+  adElement.querySelector('.map__pin img').alt = ad.offer;
 
   return adElement;
 };
