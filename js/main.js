@@ -89,6 +89,8 @@ var removeDisabledElements = function (elements) {
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
 
+var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
+addressInput.value = mapPinMainPosition;
 
 var getActiveMap = function () {
   mapElement.classList.remove('map--faded');
@@ -110,13 +112,72 @@ var getDisabledMap = function () {
   }
 };
 
-var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
-
 mapPinMain.addEventListener('click', function () {
   getActiveMap();
-  addressInput.value = mapPinMainPosition;
 });
 
 resetButton.addEventListener('click', function () {
   getDisabledMap();
 });
+
+var price = document.querySelector('input[name="price"]');
+
+var options = document.querySelectorAll('select[name="type"] option');
+for (var i = 0; i < options.length; i++) {
+  options[i].addEventListener('change', function () {
+    if (options[i].value === 'bungalo') {
+      price.setAttribute('min', '0');
+      price.placeholder = 0;
+    } else
+    if (options[i].value === 'flat') {
+      price.setAttribute('min', '1000');
+      price.placeholder = 1000;
+    } else
+    if (options[i].value === 'house') {
+      price.setAttribute('min', '5000');
+      price.placeholder = 5000;
+    } else
+    if (options[i].value === 'palace') {
+      price.setAttribute('min', '10000');
+      price.placeholder = 10000;
+    }
+  });
+}
+// var typeOfSelect = {
+//   bungalo: 0,
+//   flat: 1000,
+//   house: 5000,
+//   palace: 10000
+// };
+//
+// var getMinPriceByType = function (select) {
+//   var selectedOption = select.options[select.selectedIndex];
+//
+// };
+// getMinPriceByType();
+// var typeOfSelect = document.querySelector('select[name="type"]').value;
+// typeOfSelect.addEventListener('change', function () {
+// });
+
+
+// type.onchange = getMinPriceByType();
+
+// var getMinPrice = function (data) {
+//   for (var i = 0; i < data.length; i++) {
+//     var type = data[i];
+//     if (type === 'bungalo') {
+//       price.setAttribute('min', '0');
+//       price.placeholder = 0;
+//     } else if (type === 'flat') {
+//       price.setAttribute('min', '1000');
+//       price.placeholder = 1000;
+//     } else if (type === 'house') {
+//       price.setAttribute('min', '5000');
+//       price.placeholder = 5000;
+//     } else if (type === 'palace') {
+//       price.setAttribute('min', '10000');
+//       price.placeholder = 10000;
+//     }
+//   }
+// };
+// getMinPrice(TYPES);
