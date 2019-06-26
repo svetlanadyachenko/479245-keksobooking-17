@@ -10,6 +10,10 @@ var Y_FIRST_COORDINATE = 130;
 var Y_LAST_COORDINATE = 630;
 var MAP_PIN_MAIN_X_POSITION = 570;
 var MAP_PIN_MAIN_Y_POSITION = 375;
+var MIN_PRICE_FOR_BUNGALO = 0;
+var MIN_PRICE_FOR_FLAT = 1000;
+var MIN_PRICE_FOR_HOUSE = 5000;
+var MIN_PRICE_FOR_PALACE = 10000;
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -89,6 +93,8 @@ var removeDisabledElements = function (elements) {
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
 
+var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
+addressInput.value = mapPinMainPosition;
 
 var getActiveMap = function () {
   mapElement.classList.remove('map--faded');
@@ -110,13 +116,46 @@ var getDisabledMap = function () {
   }
 };
 
-var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
-
 mapPinMain.addEventListener('click', function () {
   getActiveMap();
-  addressInput.value = mapPinMainPosition;
 });
 
 resetButton.addEventListener('click', function () {
   getDisabledMap();
+});
+
+var select = document.querySelector('select[name="type"]');
+var price = document.querySelector('input[name="price"]');
+var timeIn = document.querySelector('select[name="timein"]');
+var timeOut = document.querySelector('select[name="timeout"]');
+
+select.addEventListener('change', function () {
+  if (select.value === 'bungalo') {
+    price.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
+  } else
+  if (select.value === 'flat') {
+    price.setAttribute('min', MIN_PRICE_FOR_FLAT);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
+  } else
+  if (select.value === 'house') {
+    price.setAttribute('min', MIN_PRICE_FOR_HOUSE);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
+  } else
+  if (select.value === 'palace') {
+    price.setAttribute('min', MIN_PRICE_FOR_PALACE);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
+  }
+});
+
+timeIn.addEventListener('change', function () {
+  if (timeIn.value === '12:00') {
+    timeOut.value = '12:00';
+  } else
+  if (timeIn.value === '13:00') {
+    timeOut.value = '13:00';
+  } else
+  if (timeIn.value === '14:00') {
+    timeOut.value = '14:00';
+  }
 });
