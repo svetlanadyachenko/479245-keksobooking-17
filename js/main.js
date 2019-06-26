@@ -10,6 +10,10 @@ var Y_FIRST_COORDINATE = 130;
 var Y_LAST_COORDINATE = 630;
 var MAP_PIN_MAIN_X_POSITION = 570;
 var MAP_PIN_MAIN_Y_POSITION = 375;
+var MIN_PRICE_FOR_BUNGALO = 0;
+var MIN_PRICE_FOR_FLAT = 1000;
+var MIN_PRICE_FOR_HOUSE = 5000;
+var MIN_PRICE_FOR_PALACE = 10000;
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -120,64 +124,38 @@ resetButton.addEventListener('click', function () {
   getDisabledMap();
 });
 
+var select = document.querySelector('select[name="type"]');
 var price = document.querySelector('input[name="price"]');
+var timeIn = document.querySelector('select[name="timein"]');
+var timeOut = document.querySelector('select[name="timeout"]');
 
-var options = document.querySelectorAll('select[name="type"] option');
-for (var i = 0; i < options.length; i++) {
-  options[i].addEventListener('change', function () {
-    if (options[i].value === 'bungalo') {
-      price.setAttribute('min', '0');
-      price.placeholder = 0;
-    } else
-    if (options[i].value === 'flat') {
-      price.setAttribute('min', '1000');
-      price.placeholder = 1000;
-    } else
-    if (options[i].value === 'house') {
-      price.setAttribute('min', '5000');
-      price.placeholder = 5000;
-    } else
-    if (options[i].value === 'palace') {
-      price.setAttribute('min', '10000');
-      price.placeholder = 10000;
-    }
-  });
-}
-// var typeOfSelect = {
-//   bungalo: 0,
-//   flat: 1000,
-//   house: 5000,
-//   palace: 10000
-// };
-//
-// var getMinPriceByType = function (select) {
-//   var selectedOption = select.options[select.selectedIndex];
-//
-// };
-// getMinPriceByType();
-// var typeOfSelect = document.querySelector('select[name="type"]').value;
-// typeOfSelect.addEventListener('change', function () {
-// });
+select.addEventListener('change', function () {
+  if (select.value === 'bungalo') {
+    price.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
+  } else
+  if (select.value === 'flat') {
+    price.setAttribute('min', MIN_PRICE_FOR_FLAT);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
+  } else
+  if (select.value === 'house') {
+    price.setAttribute('min', MIN_PRICE_FOR_HOUSE);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
+  } else
+  if (select.value === 'palace') {
+    price.setAttribute('min', MIN_PRICE_FOR_PALACE);
+    price.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
+  }
+});
 
-
-// type.onchange = getMinPriceByType();
-
-// var getMinPrice = function (data) {
-//   for (var i = 0; i < data.length; i++) {
-//     var type = data[i];
-//     if (type === 'bungalo') {
-//       price.setAttribute('min', '0');
-//       price.placeholder = 0;
-//     } else if (type === 'flat') {
-//       price.setAttribute('min', '1000');
-//       price.placeholder = 1000;
-//     } else if (type === 'house') {
-//       price.setAttribute('min', '5000');
-//       price.placeholder = 5000;
-//     } else if (type === 'palace') {
-//       price.setAttribute('min', '10000');
-//       price.placeholder = 10000;
-//     }
-//   }
-// };
-// getMinPrice(TYPES);
+timeIn.addEventListener('change', function () {
+  if (timeIn.value === '12:00') {
+    timeOut.value = '12:00';
+  } else
+  if (timeIn.value === '13:00') {
+    timeOut.value = '13:00';
+  } else
+  if (timeIn.value === '14:00') {
+    timeOut.value = '14:00';
+  }
+});
