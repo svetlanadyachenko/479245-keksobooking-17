@@ -34,9 +34,11 @@
           y: moveEvt.clientY
         };
 
-        window.mapPinMain.style.left = (window.mapPinMain.offsetLeft - shift.x) + 'px';
-        window.mapPinMain.style.top = (window.mapPinMain.offsetTop - shift.y) + 'px';
-        window.addressInput.value = ((window.mapPinMain.offsetLeft - shift.x) - window.MAP_PIN_MAIN_WIDTH / 2) + ', ' + ((window.mapPinMain.offsetTop - shift.y) - window.MAP_PIN_MAIN_HEIGHT);
+        var mapPinLastXCoords = window.mapPinMain.offsetLeft - shift.x;
+        var mapPinLastYCoords = window.mapPinMain.offsetTop - shift.y;
+        window.mapPinMain.style.left = (mapPinLastXCoords) + 'px';
+        window.mapPinMain.style.top = (mapPinLastYCoords) + 'px';
+        window.addressInput.value = (mapPinLastXCoords - window.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinLastYCoords - window.MAP_PIN_MAIN_HEIGHT);
       }
     };
 
