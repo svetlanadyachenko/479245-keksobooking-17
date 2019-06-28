@@ -4,10 +4,10 @@ var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AD_QUANTITY = 8;
 var AD_WIDTH = 50;
 var AD_HEIGHT = 70;
-var X_FIRST_COORDINATE = 0;
-var X_LAST_COORDINATE = 1200;
-var Y_FIRST_COORDINATE = 130;
-var Y_LAST_COORDINATE = 630;
+window.X_FIRST_COORDINATE = 100;
+window.X_LAST_COORDINATE = 1200;
+window.Y_FIRST_COORDINATE = 130;
+window.Y_LAST_COORDINATE = 630;
 var MAP_PIN_MAIN_X = 570;
 var MAP_PIN_MAIN_Y = 375;
 window.MAP_PIN_MAIN_WIDTH = 65;
@@ -33,8 +33,8 @@ var getAdsData = function (quantity) {
       author: 'img/avatars/user0' + (i + 1) + '.png',
       offer: getRandomElement(TYPES),
       location: {
-        x: getRandomNumber(X_FIRST_COORDINATE, X_LAST_COORDINATE),
-        y: getRandomNumber(Y_FIRST_COORDINATE, Y_LAST_COORDINATE)
+        x: getRandomNumber(window.X_FIRST_COORDINATE, window.X_LAST_COORDINATE),
+        y: getRandomNumber(window.Y_FIRST_COORDINATE, window.Y_LAST_COORDINATE)
       }
     };
     ads[i] = ad;
