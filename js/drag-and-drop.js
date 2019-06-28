@@ -47,11 +47,7 @@
       document.removeEventListener('mouseup', onMouseUp);
 
       if (dragged) {
-        var onClickPreventDefault = function (draggedEvt) {
-          draggedEvt.preventDefault();
-          window.mapPinMain.removeEventListener('click', onClickPreventDefault);
-        };
-        window.mapPinMain.addEventListener('click', onClickPreventDefault);
+        window.getActiveMap();
       }
     };
 
