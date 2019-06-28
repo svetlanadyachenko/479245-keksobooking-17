@@ -8,8 +8,10 @@ var X_FIRST_COORDINATE = 0;
 var X_LAST_COORDINATE = 1200;
 var Y_FIRST_COORDINATE = 130;
 var Y_LAST_COORDINATE = 630;
-var MAP_PIN_MAIN_X_POSITION = 570;
-var MAP_PIN_MAIN_Y_POSITION = 375;
+var MAP_PIN_MAIN_X = 570;
+var MAP_PIN_MAIN_Y = 375;
+window.MAP_PIN_MAIN_WIDTH = 65;
+window.MAP_PIN_MAIN_HEIGHT = 65;
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -63,14 +65,14 @@ var getFragment = function (data) {
 
 var mapElement = document.querySelector('.map');
 mapElement.classList.add('map--faded');
-var mapPinMain = document.querySelector('.map__pin--main');
+window.mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 adForm.classList.add('ad-form--disabled');
 var fieldsetInAdForm = adForm.querySelectorAll('fieldset');
+window.addressInput = adForm.querySelector('input[name="address"]');
 var filtersForm = mapElement.querySelector('.map__filters');
 var filtersSelect = filtersForm.querySelectorAll('select');
 var resetButton = document.querySelector('.ad-form__reset');
-var addressInput = adForm.querySelector('input[name="address"]');
 
 var getDisabledElements = function (elements) {
   for (var i = 0; i < elements.length; i++) {
@@ -86,13 +88,18 @@ var removeDisabledElements = function (elements) {
   return elements;
 };
 
+var getMapPinMainPosition = function () {
+  window.mapPinMain.style.left = (MAP_PIN_MAIN_X) + 'px';
+  window.mapPinMain.style.top = (MAP_PIN_MAIN_Y) + 'px';
+  window.addressInput.value = (MAP_PIN_MAIN_X - window.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (MAP_PIN_MAIN_Y - window.MAP_PIN_MAIN_HEIGHT);
+};
+
+getMapPinMainPosition();
+
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
 
-var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
-addressInput.value = mapPinMainPosition;
-
-var getActiveMap = function () {
+window.getActiveMap = function () {
   mapElement.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   removeDisabledElements(fieldsetInAdForm);
@@ -110,11 +117,8 @@ var getDisabledMap = function () {
     var pin = pins[i];
     pin.remove();
   }
+  getMapPinMainPosition();
 };
-
-mapPinMain.addEventListener('click', function () {
-  getActiveMap();
-});
 
 resetButton.addEventListener('click', function () {
   getDisabledMap();
