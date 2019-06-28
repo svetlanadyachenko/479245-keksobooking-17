@@ -10,10 +10,6 @@ var Y_FIRST_COORDINATE = 130;
 var Y_LAST_COORDINATE = 630;
 var MAP_PIN_MAIN_X_POSITION = 570;
 var MAP_PIN_MAIN_Y_POSITION = 375;
-var MIN_PRICE_FOR_BUNGALO = 0;
-var MIN_PRICE_FOR_FLAT = 1000;
-var MIN_PRICE_FOR_HOUSE = 5000;
-var MIN_PRICE_FOR_PALACE = 10000;
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -126,36 +122,55 @@ resetButton.addEventListener('click', function () {
 
 var select = document.querySelector('select[name="type"]');
 var price = document.querySelector('input[name="price"]');
-var timeIn = document.querySelector('select[name="timein"]');
-var timeOut = document.querySelector('select[name="timeout"]');
+
+var priceByType = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
+
+var setAttributeForPrice = function (type) {
+  price.setAttribute('min', type);
+  price.setAttribute('placeholder', type);
+};
 
 select.addEventListener('change', function () {
-  if (select.value === 'bungalo') {
-    price.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
-  } else
-  if (select.value === 'flat') {
-    price.setAttribute('min', MIN_PRICE_FOR_FLAT);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
-  } else
-  if (select.value === 'house') {
-    price.setAttribute('min', MIN_PRICE_FOR_HOUSE);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
-  } else
-  if (select.value === 'palace') {
-    price.setAttribute('min', MIN_PRICE_FOR_PALACE);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
-  }
+  setAttributeForPrice(priceByType[select.value]);
 });
 
+var timeIn = document.querySelector('select[name="timein"]');
+var timeOut = document.querySelector('select[name="timeout"]');
+var timeInSelectedIndex = document.querySelector('select[name="timein"]').options.selectedIndex;
+// var timeInValue = document.querySelector('select[name="timein"]').options[timeInSelectedIndex].value;
+var timeOutSelectedIndex = document.querySelector('select[name="timeout"]').options.selectedIndex;
+// var timeOutValue = document.querySelector('select[name="timeout"]').options[timeOutSelectedIndex].value;
+
 timeIn.addEventListener('change', function () {
-  if (timeIn.value === '12:00') {
-    timeOut.value = '12:00';
-  } else
-  if (timeIn.value === '13:00') {
-    timeOut.value = '13:00';
-  } else
-  if (timeIn.value === '14:00') {
-    timeOut.value = '14:00';
-  }
+  timeOut.value = timeOut.options[timeInSelectedIndex].value;
+
+// if (timeIn.value === '12:00') {
+//   timeOut.value = '12:00';
+// } else
+// if (timeIn.value === '13:00') {
+//   timeOut.value = '13:00';
+// } else
+// if (timeIn.value === '14:00') {
+//   timeOut.value = '14:00';
+// }
+});
+
+
+timeOut.addEventListener('change', function () {
+  timeIn.value = timeIn.options[timeOutSelectedIndex].value;
+//   timeOut = timeIn;
+//   // if (timeOut.value === '12:00') {
+//   //   timeIn.value = '12:00';
+//   // } else
+//   // if (timeOut.value === '13:00') {
+//   //   timeIn.value = '13:00';
+//   // } else
+//   // if (timeOut.value === '14:00') {
+//   //   timeIn.value = '14:00';
+//   // }
 });
