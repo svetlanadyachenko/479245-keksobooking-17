@@ -141,36 +141,14 @@ select.addEventListener('change', function () {
 
 var timeIn = document.querySelector('select[name="timein"]');
 var timeOut = document.querySelector('select[name="timeout"]');
-var timeInSelectedIndex = document.querySelector('select[name="timein"]').options.selectedIndex;
-// var timeInValue = document.querySelector('select[name="timein"]').options[timeInSelectedIndex].value;
-var timeOutSelectedIndex = document.querySelector('select[name="timeout"]').options.selectedIndex;
-// var timeOutValue = document.querySelector('select[name="timeout"]').options[timeOutSelectedIndex].value;
 
 timeIn.addEventListener('change', function () {
+  var timeInSelectedIndex = document.querySelector('select[name="timein"]').options.selectedIndex;
   timeOut.value = timeOut.options[timeInSelectedIndex].value;
-
-// if (timeIn.value === '12:00') {
-//   timeOut.value = '12:00';
-// } else
-// if (timeIn.value === '13:00') {
-//   timeOut.value = '13:00';
-// } else
-// if (timeIn.value === '14:00') {
-//   timeOut.value = '14:00';
-// }
 });
 
 
 timeOut.addEventListener('change', function () {
+  var timeOutSelectedIndex = document.querySelector('select[name="timeout"]').options.selectedIndex;
   timeIn.value = timeIn.options[timeOutSelectedIndex].value;
-//   timeOut = timeIn;
-//   // if (timeOut.value === '12:00') {
-//   //   timeIn.value = '12:00';
-//   // } else
-//   // if (timeOut.value === '13:00') {
-//   //   timeIn.value = '13:00';
-//   // } else
-//   // if (timeOut.value === '14:00') {
-//   //   timeIn.value = '14:00';
-//   // }
 });
