@@ -4,16 +4,16 @@ var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AD_QUANTITY = 8;
 var AD_WIDTH = 50;
 var AD_HEIGHT = 70;
-var X_FIRST_COORDINATE = 0;
-var X_LAST_COORDINATE = 1200;
-var Y_FIRST_COORDINATE = 130;
-var Y_LAST_COORDINATE = 630;
-var MAP_PIN_MAIN_X_POSITION = 570;
-var MAP_PIN_MAIN_Y_POSITION = 375;
-var MIN_PRICE_FOR_BUNGALO = 0;
-var MIN_PRICE_FOR_FLAT = 1000;
-var MIN_PRICE_FOR_HOUSE = 5000;
-var MIN_PRICE_FOR_PALACE = 10000;
+var MAP_PIN_MAIN_X = 570;
+var MAP_PIN_MAIN_Y = 375;
+window.main = {
+  X_FIRST_COORDINATE: 0,
+  X_LAST_COORDINATE: 1200,
+  Y_FIRST_COORDINATE: 130,
+  Y_LAST_COORDINATE: 630,
+  MAP_PIN_MAIN_WIDTH: 66,
+  MAP_PIN_MAIN_HEIGHT: 86
+};
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -35,8 +35,8 @@ var getAdsData = function (quantity) {
       author: 'img/avatars/user0' + (i + 1) + '.png',
       offer: getRandomElement(TYPES),
       location: {
-        x: getRandomNumber(X_FIRST_COORDINATE, X_LAST_COORDINATE),
-        y: getRandomNumber(Y_FIRST_COORDINATE, Y_LAST_COORDINATE)
+        x: getRandomNumber(window.main.X_FIRST_COORDINATE, window.main.X_LAST_COORDINATE),
+        y: getRandomNumber(window.main.Y_FIRST_COORDINATE, window.main.Y_LAST_COORDINATE)
       }
     };
     ads[i] = ad;
@@ -67,14 +67,12 @@ var getFragment = function (data) {
 
 var mapElement = document.querySelector('.map');
 mapElement.classList.add('map--faded');
-var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 adForm.classList.add('ad-form--disabled');
 var fieldsetInAdForm = adForm.querySelectorAll('fieldset');
 var filtersForm = mapElement.querySelector('.map__filters');
 var filtersSelect = filtersForm.querySelectorAll('select');
 var resetButton = document.querySelector('.ad-form__reset');
-var addressInput = adForm.querySelector('input[name="address"]');
 
 var getDisabledElements = function (elements) {
   for (var i = 0; i < elements.length; i++) {
@@ -90,19 +88,28 @@ var removeDisabledElements = function (elements) {
   return elements;
 };
 
+window.mainNew = {
+  mapPinMain: document.querySelector('.map__pin--main'),
+  addressInput: document.querySelector('input[name="address"]'),
+  getActiveMap: function () {
+    mapElement.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    removeDisabledElements(fieldsetInAdForm);
+    removeDisabledElements(filtersSelect);
+    similarListElement.appendChild(getFragment(ads));
+  }
+};
+
+var getMapPinMainPosition = function () {
+  window.mainNew.mapPinMain.style.left = (MAP_PIN_MAIN_X) + 'px';
+  window.mainNew.mapPinMain.style.top = (MAP_PIN_MAIN_Y) + 'px';
+  window.mainNew.addressInput.value = (MAP_PIN_MAIN_X + window.main.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (MAP_PIN_MAIN_Y + window.main.MAP_PIN_MAIN_HEIGHT);
+};
+
+getMapPinMainPosition();
+
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
-
-var mapPinMainPosition = MAP_PIN_MAIN_X_POSITION + ', ' + MAP_PIN_MAIN_Y_POSITION;
-addressInput.value = mapPinMainPosition;
-
-var getActiveMap = function () {
-  mapElement.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  removeDisabledElements(fieldsetInAdForm);
-  removeDisabledElements(filtersSelect);
-  similarListElement.appendChild(getFragment(ads));
-};
 
 var getDisabledMap = function () {
   mapElement.classList.add('map--faded');
@@ -114,11 +121,8 @@ var getDisabledMap = function () {
     var pin = pins[i];
     pin.remove();
   }
+  getMapPinMainPosition();
 };
-
-mapPinMain.addEventListener('click', function () {
-  getActiveMap();
-});
 
 resetButton.addEventListener('click', function () {
   getDisabledMap();
@@ -126,36 +130,33 @@ resetButton.addEventListener('click', function () {
 
 var select = document.querySelector('select[name="type"]');
 var price = document.querySelector('input[name="price"]');
+
+var priceByType = {
+  bungalo: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000
+};
+
+var setAttributeForPrice = function (type) {
+  price.setAttribute('placeholder', type);
+  price.setAttribute('min', type);
+};
+
+select.addEventListener('change', function () {
+  setAttributeForPrice(priceByType[select.value]);
+  price.value = '';
+});
+
 var timeIn = document.querySelector('select[name="timein"]');
 var timeOut = document.querySelector('select[name="timeout"]');
 
-select.addEventListener('change', function () {
-  if (select.value === 'bungalo') {
-    price.setAttribute('min', MIN_PRICE_FOR_BUNGALO);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_BUNGALO);
-  } else
-  if (select.value === 'flat') {
-    price.setAttribute('min', MIN_PRICE_FOR_FLAT);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_FLAT);
-  } else
-  if (select.value === 'house') {
-    price.setAttribute('min', MIN_PRICE_FOR_HOUSE);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_HOUSE);
-  } else
-  if (select.value === 'palace') {
-    price.setAttribute('min', MIN_PRICE_FOR_PALACE);
-    price.setAttribute('placeholder', MIN_PRICE_FOR_PALACE);
-  }
+timeIn.addEventListener('change', function () {
+  var timeInSelectedIndex = timeIn.options.selectedIndex;
+  timeOut.value = timeOut.options[timeInSelectedIndex].value;
 });
 
-timeIn.addEventListener('change', function () {
-  if (timeIn.value === '12:00') {
-    timeOut.value = '12:00';
-  } else
-  if (timeIn.value === '13:00') {
-    timeOut.value = '13:00';
-  } else
-  if (timeIn.value === '14:00') {
-    timeOut.value = '14:00';
-  }
+timeOut.addEventListener('change', function () {
+  var timeOutSelectedIndex = timeOut.options.selectedIndex;
+  timeIn.value = timeIn.options[timeOutSelectedIndex].value;
 });
