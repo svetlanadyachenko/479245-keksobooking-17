@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-  window.mapPinMain.addEventListener('mousedown', function (evt) {
+  window.mainNew.mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -9,36 +9,39 @@
       y: evt.clientY
     };
 
-    var dragged = false;
+    var activated = false;
+
+    if (!activated) {
+      activated = true;
+      window.mainNew.getActiveMap();
+    }
 
     var onMouseMove = function (moveEvt) {
-      if ((startCoords.x > window.X_LAST_COORDINATE) ||
-          (startCoords.x < window.X_FIRST_COORDINATE) ||
-          (startCoords.y > window.Y_LAST_COORDINATE) ||
-          (startCoords.y < window.Y_FIRST_COORDINATE)) {
-        dragged = false;
+
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      var mapPinNewXCoords = window.mainNew.mapPinMain.offsetLeft - shift.x;
+      var mapPinNewYCoords = window.mainNew.mapPinMain.offsetTop - shift.y;
+
+      if ((mapPinNewXCoords > window.main.X_LAST_COORDINATE - window.main.MAP_PIN_MAIN_WIDTH / 2) ||
+            (mapPinNewXCoords < window.main.X_FIRST_COORDINATE - window.main.MAP_PIN_MAIN_WIDTH / 2) ||
+            (mapPinNewYCoords > window.main.Y_LAST_COORDINATE - window.main.MAP_PIN_MAIN_HEIGHT) ||
+            (mapPinNewYCoords < window.main.Y_FIRST_COORDINATE - window.main.MAP_PIN_MAIN_HEIGHT)) {
+        activated = false;
       } else {
-        moveEvt.preventDefault();
-
-        dragged = true;
-
-        window.getActiveMap();
-
-        var shift = {
-          x: startCoords.x - moveEvt.clientX,
-          y: startCoords.y - moveEvt.clientY
-        };
-
-        startCoords = {
-          x: moveEvt.clientX,
-          y: moveEvt.clientY
-        };
-
-        var mapPinLastXCoords = window.mapPinMain.offsetLeft - shift.x;
-        var mapPinLastYCoords = window.mapPinMain.offsetTop - shift.y;
-        window.mapPinMain.style.left = (mapPinLastXCoords) + 'px';
-        window.mapPinMain.style.top = (mapPinLastYCoords) + 'px';
-        window.addressInput.value = (mapPinLastXCoords - window.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinLastYCoords - window.MAP_PIN_MAIN_HEIGHT);
+        window.mainNew.mapPinMain.style.left = (mapPinNewXCoords) + 'px';
+        window.mainNew.mapPinMain.style.top = (mapPinNewYCoords) + 'px';
+        window.mainNew.addressInput.value = (mapPinNewXCoords + window.main.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinNewYCoords + window.main.MAP_PIN_MAIN_HEIGHT);
       }
     };
 
@@ -47,10 +50,6 @@
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
-
-      if (dragged) {
-        window.getActiveMap();
-      }
     };
 
     document.addEventListener('mousemove', onMouseMove);

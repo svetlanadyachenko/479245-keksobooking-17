@@ -4,14 +4,16 @@ var TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AD_QUANTITY = 8;
 var AD_WIDTH = 50;
 var AD_HEIGHT = 70;
-window.X_FIRST_COORDINATE = 140;
-window.X_LAST_COORDINATE = 1200;
-window.Y_FIRST_COORDINATE = 130;
-window.Y_LAST_COORDINATE = 630;
 var MAP_PIN_MAIN_X = 570;
 var MAP_PIN_MAIN_Y = 375;
-window.MAP_PIN_MAIN_WIDTH = 65;
-window.MAP_PIN_MAIN_HEIGHT = 65;
+window.main = {
+  X_FIRST_COORDINATE: 0,
+  X_LAST_COORDINATE: 1200,
+  Y_FIRST_COORDINATE: 130,
+  Y_LAST_COORDINATE: 630,
+  MAP_PIN_MAIN_WIDTH: 66,
+  MAP_PIN_MAIN_HEIGHT: 86
+};
 
 var similarListElement = document.querySelector('.map__pins');
 var similarAdTemplate = document.querySelector('#pin')
@@ -33,8 +35,8 @@ var getAdsData = function (quantity) {
       author: 'img/avatars/user0' + (i + 1) + '.png',
       offer: getRandomElement(TYPES),
       location: {
-        x: getRandomNumber(window.X_FIRST_COORDINATE, window.X_LAST_COORDINATE),
-        y: getRandomNumber(window.Y_FIRST_COORDINATE, window.Y_LAST_COORDINATE)
+        x: getRandomNumber(window.main.X_FIRST_COORDINATE, window.main.X_LAST_COORDINATE),
+        y: getRandomNumber(window.main.Y_FIRST_COORDINATE, window.main.Y_LAST_COORDINATE)
       }
     };
     ads[i] = ad;
@@ -65,11 +67,9 @@ var getFragment = function (data) {
 
 var mapElement = document.querySelector('.map');
 mapElement.classList.add('map--faded');
-window.mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 adForm.classList.add('ad-form--disabled');
 var fieldsetInAdForm = adForm.querySelectorAll('fieldset');
-window.addressInput = adForm.querySelector('input[name="address"]');
 var filtersForm = mapElement.querySelector('.map__filters');
 var filtersSelect = filtersForm.querySelectorAll('select');
 var resetButton = document.querySelector('.ad-form__reset');
@@ -88,24 +88,28 @@ var removeDisabledElements = function (elements) {
   return elements;
 };
 
+window.mainNew = {
+  mapPinMain: document.querySelector('.map__pin--main'),
+  addressInput: document.querySelector('input[name="address"]'),
+  getActiveMap: function () {
+    mapElement.classList.remove('map--faded');
+    adForm.classList.remove('ad-form--disabled');
+    removeDisabledElements(fieldsetInAdForm);
+    removeDisabledElements(filtersSelect);
+    similarListElement.appendChild(getFragment(ads));
+  }
+};
+
 var getMapPinMainPosition = function () {
-  window.mapPinMain.style.left = (MAP_PIN_MAIN_X) + 'px';
-  window.mapPinMain.style.top = (MAP_PIN_MAIN_Y) + 'px';
-  window.addressInput.value = (MAP_PIN_MAIN_X - window.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (MAP_PIN_MAIN_Y - window.MAP_PIN_MAIN_HEIGHT);
+  window.mainNew.mapPinMain.style.left = (MAP_PIN_MAIN_X) + 'px';
+  window.mainNew.mapPinMain.style.top = (MAP_PIN_MAIN_Y) + 'px';
+  window.mainNew.addressInput.value = (MAP_PIN_MAIN_X + window.main.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (MAP_PIN_MAIN_Y + window.main.MAP_PIN_MAIN_HEIGHT);
 };
 
 getMapPinMainPosition();
 
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
-
-window.getActiveMap = function () {
-  mapElement.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  removeDisabledElements(fieldsetInAdForm);
-  removeDisabledElements(filtersSelect);
-  similarListElement.appendChild(getFragment(ads));
-};
 
 var getDisabledMap = function () {
   mapElement.classList.add('map--faded');
@@ -151,8 +155,20 @@ timeIn.addEventListener('change', function () {
   timeOut.value = timeOut.options[timeInSelectedIndex].value;
 });
 
-
 timeOut.addEventListener('change', function () {
   var timeOutSelectedIndex = document.querySelector('select[name="timeout"]').options.selectedIndex;
   timeIn.value = timeIn.options[timeOutSelectedIndex].value;
 });
+
+// var timeIn = document.querySelector('select[name="timein"]').options.selectedIndex;
+// var timeOut = document.querySelector('select[name="timeout"]').options.selectedIndex;
+//
+// timeIn.addEventListener('change', function () {
+//   var timeInSelectedIndex = timeIn.SelectedIndex;
+//   timeOut.value = timeOut.options[timeInSelectedIndex].value;
+// });
+//
+// timeOut.addEventListener('change', function () {
+//   var timeOutSelectedIndex = timeOut.SelectedIndex;
+//   timeIn.value = timeIn.options[timeOutSelectedIndex].value;
+// });
