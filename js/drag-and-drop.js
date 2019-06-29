@@ -9,15 +9,12 @@
       y: evt.clientY
     };
 
-    var activated = false;
-
     if (!activated) {
-      activated = true;
+      var activated = true;
       window.mainNew.getActiveMap();
     }
 
     var onMouseMove = function (moveEvt) {
-
       moveEvt.preventDefault();
 
       var shift = {

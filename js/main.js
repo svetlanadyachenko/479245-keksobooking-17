@@ -139,36 +139,24 @@ var priceByType = {
 };
 
 var setAttributeForPrice = function (type) {
-  price.setAttribute('min', type);
   price.setAttribute('placeholder', type);
+  price.setAttribute('min', type);
 };
 
 select.addEventListener('change', function () {
   setAttributeForPrice(priceByType[select.value]);
+  price.value = '';
 });
 
 var timeIn = document.querySelector('select[name="timein"]');
 var timeOut = document.querySelector('select[name="timeout"]');
 
 timeIn.addEventListener('change', function () {
-  var timeInSelectedIndex = document.querySelector('select[name="timein"]').options.selectedIndex;
+  var timeInSelectedIndex = timeIn.options.selectedIndex;
   timeOut.value = timeOut.options[timeInSelectedIndex].value;
 });
 
 timeOut.addEventListener('change', function () {
-  var timeOutSelectedIndex = document.querySelector('select[name="timeout"]').options.selectedIndex;
+  var timeOutSelectedIndex = timeOut.options.selectedIndex;
   timeIn.value = timeIn.options[timeOutSelectedIndex].value;
 });
-
-// var timeIn = document.querySelector('select[name="timein"]').options.selectedIndex;
-// var timeOut = document.querySelector('select[name="timeout"]').options.selectedIndex;
-//
-// timeIn.addEventListener('change', function () {
-//   var timeInSelectedIndex = timeIn.SelectedIndex;
-//   timeOut.value = timeOut.options[timeInSelectedIndex].value;
-// });
-//
-// timeOut.addEventListener('change', function () {
-//   var timeOutSelectedIndex = timeOut.SelectedIndex;
-//   timeIn.value = timeIn.options[timeOutSelectedIndex].value;
-// });
