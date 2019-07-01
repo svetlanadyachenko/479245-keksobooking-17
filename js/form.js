@@ -1,6 +1,11 @@
 'use strict';
 (function () {
 
+  window.form = {
+    adForm: document.querySelector('.ad-form'),
+    fieldsetInAdForm: document.querySelectorAll('fieldset')
+  };
+
   var select = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
@@ -11,7 +16,7 @@
 
   select.addEventListener('change', function () {
     setAttributeForPrice(window.constants.priceByType[select.value]);
-    price.value = '';
+    // price.value = '';
   });
 
   var timeIn = document.querySelector('select[name="timein"]');
