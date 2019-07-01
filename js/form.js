@@ -3,7 +3,8 @@
 
   window.form = {
     adForm: document.querySelector('.ad-form'),
-    fieldsetInAdForm: document.querySelectorAll('fieldset')
+    fieldsetInAdForm: document.querySelectorAll('fieldset'),
+    addressInput: document.querySelector('input[name="address"]')
   };
 
   var select = document.querySelector('select[name="type"]');
