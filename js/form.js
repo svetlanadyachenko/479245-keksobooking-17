@@ -17,7 +17,6 @@
 
   select.addEventListener('change', function () {
     setAttributeForPrice(window.constants.priceByType[select.value]);
-    // price.value = '';
   });
 
   var timeIn = document.querySelector('select[name="timein"]');

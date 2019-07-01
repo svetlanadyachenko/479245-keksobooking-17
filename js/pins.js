@@ -54,4 +54,5 @@
   window.appendNewAds = function () {
     similarListElement.appendChild(getFragment(ads));
   };
+
 })();
