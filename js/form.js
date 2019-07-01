@@ -4,20 +4,13 @@
   var select = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
-  var priceByType = {
-    bungalo: 0,
-    flat: 1000,
-    house: 5000,
-    palace: 10000
-  };
-
   var setAttributeForPrice = function (type) {
     price.setAttribute('placeholder', type);
     price.setAttribute('min', type);
   };
 
   select.addEventListener('change', function () {
-    setAttributeForPrice(priceByType[select.value]);
+    setAttributeForPrice(window.constants.priceByType[select.value]);
     price.value = '';
   });
 

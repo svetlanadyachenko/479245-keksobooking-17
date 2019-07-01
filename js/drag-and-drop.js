@@ -56,6 +56,7 @@
     document.addEventListener('mouseup', onMouseUp);
     window.main.resetButton.addEventListener('click', function () {
       activated = false;
+      window.main.getDisabledMap();
     });
   });
 

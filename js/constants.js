@@ -13,7 +13,13 @@
     Y_FIRST_COORDINATE: 130,
     Y_LAST_COORDINATE: 630,
     MAP_PIN_MAIN_WIDTH: 66,
-    MAP_PIN_MAIN_HEIGHT: 86
+    MAP_PIN_MAIN_HEIGHT: 86,
+    priceByType: {
+      bungalo: 0,
+      flat: 1000,
+      house: 5000,
+      palace: 10000
+    }
   };
 
 })();

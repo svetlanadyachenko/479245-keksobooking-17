@@ -58,6 +58,7 @@ var fieldsetInAdForm = adForm.querySelectorAll('fieldset');
 var filtersForm = mapElement.querySelector('.map__filters');
 var filtersSelect = filtersForm.querySelectorAll('select');
 
+
 var getDisabledElements = function (elements) {
   for (var i = 0; i < elements.length; i++) {
     elements[i].setAttribute('disabled', 'disabled');
@@ -75,6 +76,7 @@ var removeDisabledElements = function (elements) {
 window.main = {
   mapPinMain: document.querySelector('.map__pin--main'),
   addressInput: document.querySelector('input[name="address"]'),
+  resetButton: document.querySelector('.ad-form__reset'),
   getActiveMap: function () {
     mapElement.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
@@ -82,7 +84,18 @@ window.main = {
     removeDisabledElements(filtersSelect);
     similarListElement.appendChild(getFragment(ads));
   },
-  resetButton: document.querySelector('.ad-form__reset')
+  getDisabledMap: function () {
+    mapElement.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    getDisabledElements(fieldsetInAdForm);
+    getDisabledElements(filtersSelect);
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pins.length; i++) {
+      var pin = pins[i];
+      pin.remove();
+    }
+    getMapPinMainPosition();
+  }
 };
 
 var getMapPinMainPosition = function () {
@@ -96,19 +109,9 @@ getMapPinMainPosition();
 getDisabledElements(fieldsetInAdForm);
 getDisabledElements(filtersSelect);
 
-var getDisabledMap = function () {
-  mapElement.classList.add('map--faded');
-  adForm.classList.add('ad-form--disabled');
-  getDisabledElements(fieldsetInAdForm);
-  getDisabledElements(filtersSelect);
-  var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-  for (var i = 0; i < pins.length; i++) {
-    var pin = pins[i];
-    pin.remove();
-  }
-  getMapPinMainPosition();
-};
-
-window.main.resetButton.addEventListener('click', function () {
-  getDisabledMap();
-});
+// resetButton.addEventListener('click', function () {
+//   if (activated) {
+//     activated = false;
+//   }
+//   getDisabledMap();
+// });
