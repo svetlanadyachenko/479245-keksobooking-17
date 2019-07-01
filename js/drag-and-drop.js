@@ -1,9 +1,9 @@
 'use strict';
 (function () {
 
-  var activated = false;
+  window.main.activated = false;
 
-  window.mainNew.mapPinMain.addEventListener('mousedown', function (evt) {
+  window.main.mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -24,28 +24,28 @@
         y: moveEvt.clientY
       };
 
-      var mapPinNewXCoords = window.mainNew.mapPinMain.offsetLeft - shift.x;
-      var mapPinNewYCoords = window.mainNew.mapPinMain.offsetTop - shift.y;
+      var mapPinNewXCoords = window.main.mapPinMain.offsetLeft - shift.x;
+      var mapPinNewYCoords = window.main.mapPinMain.offsetTop - shift.y;
 
-      if ((mapPinNewXCoords > window.main.X_LAST_COORDINATE - window.main.MAP_PIN_MAIN_WIDTH / 2) ||
-            (mapPinNewXCoords < window.main.X_FIRST_COORDINATE - window.main.MAP_PIN_MAIN_WIDTH / 2) ||
-            (mapPinNewYCoords > window.main.Y_LAST_COORDINATE - window.main.MAP_PIN_MAIN_HEIGHT) ||
-            (mapPinNewYCoords < window.main.Y_FIRST_COORDINATE - window.main.MAP_PIN_MAIN_HEIGHT)) {
+      if ((mapPinNewXCoords > window.constants.X_LAST_COORDINATE - window.constants.MAP_PIN_MAIN_WIDTH / 2) ||
+            (mapPinNewXCoords < window.constants.X_FIRST_COORDINATE - window.constants.MAP_PIN_MAIN_WIDTH / 2) ||
+            (mapPinNewYCoords > window.constants.Y_LAST_COORDINATE - window.constants.MAP_PIN_MAIN_HEIGHT) ||
+            (mapPinNewYCoords < window.constants.Y_FIRST_COORDINATE - window.constants.MAP_PIN_MAIN_HEIGHT)) {
         return;
       }
 
-      window.mainNew.mapPinMain.style.left = (mapPinNewXCoords) + 'px';
-      window.mainNew.mapPinMain.style.top = (mapPinNewYCoords) + 'px';
-      window.mainNew.addressInput.value = (mapPinNewXCoords + window.main.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinNewYCoords + window.main.MAP_PIN_MAIN_HEIGHT);
+      window.main.mapPinMain.style.left = (mapPinNewXCoords) + 'px';
+      window.main.mapPinMain.style.top = (mapPinNewYCoords) + 'px';
+      window.form.addressInput.value = (mapPinNewXCoords + window.constants.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinNewYCoords + window.constants.MAP_PIN_MAIN_HEIGHT);
 
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
-      if (!activated) {
-        activated = true;
-        window.mainNew.getActiveMap();
+      if (!window.main.activated) {
+        window.main.activated = true;
+        window.main.getActiveMap();
       }
 
       document.removeEventListener('mousemove', onMouseMove);
@@ -55,4 +55,5 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
+
 })();
