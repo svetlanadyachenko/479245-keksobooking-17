@@ -57,7 +57,6 @@ adForm.classList.add('ad-form--disabled');
 var fieldsetInAdForm = adForm.querySelectorAll('fieldset');
 var filtersForm = mapElement.querySelector('.map__filters');
 var filtersSelect = filtersForm.querySelectorAll('select');
-var resetButton = document.querySelector('.ad-form__reset');
 
 var getDisabledElements = function (elements) {
   for (var i = 0; i < elements.length; i++) {
@@ -82,7 +81,8 @@ window.main = {
     removeDisabledElements(fieldsetInAdForm);
     removeDisabledElements(filtersSelect);
     similarListElement.appendChild(getFragment(ads));
-  }
+  },
+  resetButton: document.querySelector('.ad-form__reset')
 };
 
 var getMapPinMainPosition = function () {
@@ -109,6 +109,6 @@ var getDisabledMap = function () {
   getMapPinMainPosition();
 };
 
-resetButton.addEventListener('click', function () {
+window.main.resetButton.addEventListener('click', function () {
   getDisabledMap();
 });

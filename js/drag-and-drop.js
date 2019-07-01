@@ -54,6 +54,9 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+    window.main.resetButton.addEventListener('click', function () {
+      activated = false;
+    });
   });
 
 })();
