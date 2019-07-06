@@ -14,7 +14,7 @@
     Y_LAST_COORDINATE: 630,
     MAP_PIN_MAIN_WIDTH: 66,
     MAP_PIN_MAIN_HEIGHT: 86,
-    priceByType: {
+    PRICE_BY_TYPE: {
       bungalo: 0,
       flat: 1000,
       house: 5000,

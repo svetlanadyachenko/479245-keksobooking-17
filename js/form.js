@@ -7,6 +7,8 @@
     addressInput: document.querySelector('input[name="address"]')
   };
 
+  window.form.adForm.classList.add('ad-form--disabled');
+
   var select = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
@@ -16,7 +18,7 @@
   };
 
   select.addEventListener('change', function () {
-    setAttributeForPrice(window.constants.priceByType[select.value]);
+    setAttributeForPrice(window.constants.PRICE_BY_TYPE[select.value]);
   });
 
   var timeIn = document.querySelector('select[name="timein"]');

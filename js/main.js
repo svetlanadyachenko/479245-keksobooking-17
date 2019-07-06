@@ -6,8 +6,6 @@
   mapElement.classList.add('map--faded');
   var filtersForm = mapElement.querySelector('.map__filters');
   var filtersSelect = filtersForm.querySelectorAll('select');
-  window.form.adForm.classList.add('ad-form--disabled');
-
 
   var getDisabledElements = function (elements) {
     for (var i = 0; i < elements.length; i++) {
@@ -32,6 +30,7 @@
       removeDisabledElements(window.form.fieldsetInAdForm);
       removeDisabledElements(filtersSelect);
       window.appendNewAds();
+      window.main.activated = true;
     },
     getDisabledMap: function () {
       mapElement.classList.add('map--faded');
