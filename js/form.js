@@ -34,4 +34,22 @@
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
   });
 
+  var saveHandler = function () {
+    window.form.adForm.classList.add('ad-form--disabled');
+    window.main.getDisabledElements(window.form.fieldsetInAdForm);
+    window.main.getDisabledElements(window.main.filtersSelect);
+  };
+
+  var errorHandler = function () {
+    var errorTemplate = document.querySelector('#error').content;
+    var errorMessage = errorTemplate.cloneNode(true);
+    var main = document.querySelector('main');
+    main.appendChild(errorMessage);
+  };
+
+  window.form.adForm.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(window.form.adForm), saveHandler, errorHandler);
+    evt.preventDefault();
+  });
+
 })();
