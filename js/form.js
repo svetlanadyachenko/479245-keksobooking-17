@@ -38,15 +38,21 @@
     window.main.getDisabledMap();
   };
 
-  var errorTemplate = document.querySelector('#error').content;
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var main = document.querySelector('main');
 
   var errorHandler = function () {
-    main.appendChild(errorTemplate.cloneNode(true));
-    var errorButton = document.querySelector('.error__button');
-    var error = document.querySelector('.error');
+    var error = errorTemplate.cloneNode(true);
+    main.appendChild(error);
+    var errorButton = error.querySelector('.error__button');
     var closeErrorMessage = function () {
       error.remove();
+      document.removeEventListener('keydown', onErrorMessageEscPress);
+    };
+    var onErrorMessageEscPress = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEYCODE) {
+        closeErrorMessage();
+      }
     };
     errorButton.addEventListener('click', function () {
       closeErrorMessage();
@@ -54,11 +60,7 @@
     error.addEventListener('click', function () {
       closeErrorMessage();
     });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEYCODE) {
-        closeErrorMessage();
-      }
-    });
+    document.addEventListener('keydown', onErrorMessageEscPress);
   };
 
   window.form.adForm.addEventListener('submit', function (evt) {
