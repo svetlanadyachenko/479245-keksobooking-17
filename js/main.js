@@ -57,8 +57,8 @@
   window.main.getDisabledElements(window.main.filtersSelect);
 
   resetButton.addEventListener('click', function () {
-    window.main.getDisabledMap();
     window.form.adForm.reset();
+    window.main.getDisabledMap();
   });
 
 })();
