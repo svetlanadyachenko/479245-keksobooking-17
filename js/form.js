@@ -45,6 +45,11 @@
     var errorMessage = errorTemplate.cloneNode(true);
     var main = document.querySelector('main');
     main.appendChild(errorMessage);
+    var error = document.querySelector('.error');
+    var errorButton = document.querySelector('.error__button');
+    errorButton.addEventListener('click', function () {
+      error.remove();
+    });
   };
 
   window.form.adForm.addEventListener('submit', function (evt) {
