@@ -1,8 +1,6 @@
 'use strict';
 (function () {
 
-  window.main.activated = false;
-
   window.main.mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -44,7 +42,6 @@
       upEvt.preventDefault();
 
       if (!window.main.activated) {
-        window.main.activated = true;
         window.main.getActiveMap();
       }
 

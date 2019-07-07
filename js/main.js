@@ -5,39 +5,36 @@
   var mapElement = document.querySelector('.map');
   mapElement.classList.add('map--faded');
   var filtersForm = mapElement.querySelector('.map__filters');
-  var filtersSelect = filtersForm.querySelectorAll('select');
-  window.form.adForm.classList.add('ad-form--disabled');
-
-
-  var getDisabledElements = function (elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].setAttribute('disabled', 'disabled');
-    }
-    return elements;
-  };
-
-  var removeDisabledElements = function (elements) {
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].removeAttribute('disabled', 'disabled');
-    }
-    return elements;
-  };
 
   window.main = {
+    filtersSelect: filtersForm.querySelectorAll('select'),
     activated: false,
     mapPinMain: document.querySelector('.map__pin--main'),
+    getDisabledElements: function (elements) {
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].setAttribute('disabled', 'disabled');
+      }
+      return elements;
+    },
+    removeDisabledElements: function (elements) {
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].removeAttribute('disabled');
+      }
+      return elements;
+    },
     getActiveMap: function () {
       mapElement.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
-      removeDisabledElements(window.form.fieldsetInAdForm);
-      removeDisabledElements(filtersSelect);
+      window.main.removeDisabledElements(window.form.fieldsetInAdForm);
+      window.main.removeDisabledElements(window.main.filtersSelect);
       window.appendNewAds();
+      window.main.activated = true;
     },
     getDisabledMap: function () {
       mapElement.classList.add('map--faded');
       window.form.adForm.classList.add('ad-form--disabled');
-      getDisabledElements(window.form.fieldsetInAdForm);
-      getDisabledElements(filtersSelect);
+      window.main.getDisabledElements(window.form.fieldsetInAdForm);
+      window.main.getDisabledElements(window.main.filtersSelect);
       var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
       for (var i = 0; i < pins.length; i++) {
         var pin = pins[i];
@@ -56,10 +53,11 @@
 
   getMapPinMainPosition();
 
-  getDisabledElements(window.form.fieldsetInAdForm);
-  getDisabledElements(filtersSelect);
+  window.main.getDisabledElements(window.form.fieldsetInAdForm);
+  window.main.getDisabledElements(window.main.filtersSelect);
 
   resetButton.addEventListener('click', function () {
+    window.form.adForm.reset();
     window.main.getDisabledMap();
   });
 
