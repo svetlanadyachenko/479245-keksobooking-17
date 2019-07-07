@@ -58,6 +58,7 @@
 
   resetButton.addEventListener('click', function () {
     window.main.getDisabledMap();
+    window.form.adForm.reset();
   });
 
 })();

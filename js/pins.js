@@ -25,7 +25,8 @@
   };
 
   var loadHandler = function (ads) {
-    similarListElement.appendChild(getFragment(ads));
+    var limitAds = ads.slice(0, 5);
+    similarListElement.appendChild(getFragment(limitAds));
   };
 
   var errorPinHandler = function (errorMessage) {
