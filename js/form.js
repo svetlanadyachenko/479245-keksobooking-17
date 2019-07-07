@@ -42,9 +42,8 @@
 
   var errorHandler = function () {
     var errorTemplate = document.querySelector('#error').content;
-    var errorMessage = errorTemplate.cloneNode(true);
     var main = document.querySelector('main');
-    main.appendChild(errorMessage);
+    main.appendChild(errorTemplate.cloneNode(true));
     var error = document.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
     errorButton.addEventListener('click', function () {
