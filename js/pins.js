@@ -18,7 +18,7 @@
 
   var getFragment = function (data) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.constants.AD_QUANTITY; i++) {
+    for (var i = 0; i < data.length; i++) {
       fragment.appendChild(renderAd(data[i]));
     }
     return fragment;

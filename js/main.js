@@ -18,7 +18,7 @@
     },
     removeDisabledElements: function (elements) {
       for (var i = 0; i < elements.length; i++) {
-        elements[i].removeAttribute('disabled', 'disabled');
+        elements[i].removeAttribute('disabled');
       }
       return elements;
     },

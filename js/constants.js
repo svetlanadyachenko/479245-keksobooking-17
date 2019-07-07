@@ -3,7 +3,8 @@
 
   window.constants = {
     TYPES: ['palace', 'flat', 'house', 'bungalo'],
-    AD_QUANTITY: 10,
+    ESC_KEYCODE: 27,
+    AD_QUANTITY: 5,
     AD_WIDTH: 50,
     AD_HEIGHT: 70,
     MAP_PIN_MAIN_X: 570,

@@ -35,19 +35,29 @@
   });
 
   var saveHandler = function () {
-    window.form.adForm.classList.add('ad-form--disabled');
-    window.main.getDisabledElements(window.form.fieldsetInAdForm);
-    window.main.getDisabledElements(window.main.filtersSelect);
+    window.main.getDisabledMap();
   };
 
+  var errorTemplate = document.querySelector('#error').content;
+  var main = document.querySelector('main');
+
   var errorHandler = function () {
-    var errorTemplate = document.querySelector('#error').content;
-    var main = document.querySelector('main');
     main.appendChild(errorTemplate.cloneNode(true));
-    var error = document.querySelector('.error');
     var errorButton = document.querySelector('.error__button');
-    errorButton.addEventListener('click', function () {
+    var error = document.querySelector('.error');
+    var closeErrorMessage = function () {
       error.remove();
+    };
+    errorButton.addEventListener('click', function () {
+      closeErrorMessage();
+    });
+    error.addEventListener('click', function () {
+      closeErrorMessage();
+    });
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEYCODE) {
+        closeErrorMessage();
+      }
     });
   };
 
