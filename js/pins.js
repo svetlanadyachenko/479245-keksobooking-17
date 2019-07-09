@@ -35,15 +35,10 @@
 
   var updateAds = function () {
     var sameTypeAds = ads.filter(function (it) {
-      return it.typeOfHouse === housingType;
+      return it.type === housingType;
     });
 
-    var filteredAds = sameTypeAds.concat(ads);
-    var uniqueAds = filteredAds.filter(function (it, i) {
-      return filteredAds.indexOf(it) === i;
-    });
-
-    render(uniqueAds);
+    render(sameTypeAds);
   };
 
   var getTypeChange = function (type) {
@@ -52,8 +47,7 @@
   };
 
   housingType.addEventListener('change', function () {
-    var newType = housingType.options.selectedIndex;
-    housingType.options.value = newType;
+    var newType = housingType.value;
     getTypeChange(newType);
   });
 
