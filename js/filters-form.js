@@ -7,7 +7,7 @@
     ads: [],
     updateAds: function () {
       var sameTypeAds = window.filtersForm.ads.filter(function (it) {
-        return it.type === housingTypeFilter.value;
+        return it.typeOfHouse === housingTypeFilter.value;
       });
       window.render(sameTypeAds);
     }
@@ -15,15 +15,14 @@
 
   var housingTypeFilter = mapFilters.querySelector('select[name="housing-type"]');
 
-  var getTypeChange = function (type) {
-    housingTypeFilter.value = type;
+  var getTypeChange = function (typeOfHouse) {
+    housingTypeFilter.value = typeOfHouse;
     window.filtersForm.updateAds();
   };
 
   housingTypeFilter.addEventListener('change', function () {
-    var housingTypeSelectedIndex = housingTypeFilter.selectedIndex;
-    housingTypeFilter.value = housingTypeFilter[housingTypeSelectedIndex];
-    var newType = housingTypeFilter.value;
+    // housingTypeFilter.value = housingTypeFilter[housingTypeFilter.selectedIndex];
+    var newType = housingTypeFilter.selected.value;
     getTypeChange(newType);
   });
 
