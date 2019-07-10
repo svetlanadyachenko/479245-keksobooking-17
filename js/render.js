@@ -7,11 +7,15 @@
   var renderAd = function (ad) {
     var element = similarAdTemplate.cloneNode(true);
     var adElement = element.querySelector('.map__pin');
+    var card = document.createElement('div');
+    card.classList.add('type-of-house');
+    adElement.appendChild(card);
 
     adElement.style.left = ad.location.x - (window.constants.AD_WIDTH / 2) + 'px';
     adElement.style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
     adElement.querySelector('.map__pin img').src = ad.author.avatar;
     adElement.querySelector('.map__pin img').alt = ad.offer.title;
+    adElement.querySelector('.type-of-house').textContent = ad.offer.type;
 
     return element;
   };
