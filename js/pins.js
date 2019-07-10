@@ -1,59 +1,9 @@
 'use strict';
 (function () {
 
-  var similarListElement = document.querySelector('.map__pins');
-  var similarAdTemplate = document.querySelector('#pin').content;
-  var filtersForm = document.querySelector('.map__filters');
-  window.pins = {
-    filtersSelect: filtersForm.querySelectorAll('select')
-  };
-  var housingType = document.querySelector('select[name="housing-type"]');
-  var ads = [];
-
-  var renderAd = function (ad) {
-    var element = similarAdTemplate.cloneNode(true);
-    var adElement = element.querySelector('.map__pin');
-    adElement.style.left = ad.location.x - (window.constants.AD_WIDTH / 2) + 'px';
-    adElement.style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
-    adElement.querySelector('.map__pin img').src = ad.author.avatar;
-    adElement.querySelector('.map__pin img').alt = ad.offer.title;
-    return element;
-  };
-
-  var getFragment = function (data) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(renderAd(data[i]));
-    }
-    return fragment;
-  };
-
-  var render = function (data) {
-    var limitData = data.slice(0, 5);
-    similarListElement.appendChild(getFragment(limitData));
-  };
-
-  var updateAds = function () {
-    var sameTypeAds = ads.filter(function (it) {
-      return it.type === housingType;
-    });
-
-    render(sameTypeAds);
-  };
-
-  var getTypeChange = function (type) {
-    housingType = type;
-    updateAds();
-  };
-
-  housingType.addEventListener('change', function () {
-    var newType = housingType.value;
-    getTypeChange(newType);
-  });
-
   var loadHandler = function (data) {
-    ads = data;
-    updateAds();
+    window.filtersForm.ads = data;
+    window.filtersForm.updateAds();
   };
 
   var errorPinHandler = function (errorMessage) {
