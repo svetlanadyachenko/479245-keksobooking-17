@@ -4,10 +4,8 @@
   var resetButton = document.querySelector('.ad-form__reset');
   var mapElement = document.querySelector('.map');
   mapElement.classList.add('map--faded');
-  var filtersForm = mapElement.querySelector('.map__filters');
 
   window.main = {
-    filtersSelect: filtersForm.querySelectorAll('select'),
     activated: false,
     mapPinMain: document.querySelector('.map__pin--main'),
     getDisabledElements: function (elements) {
@@ -26,20 +24,16 @@
       mapElement.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
       window.main.removeDisabledElements(window.form.fieldsetInAdForm);
-      window.main.removeDisabledElements(window.main.filtersSelect);
-      window.appendNewAds();
+      window.main.removeDisabledElements(window.pins.mapFilters);
+      window.pins.appendNewAds();
       window.main.activated = true;
     },
     getDisabledMap: function () {
       mapElement.classList.add('map--faded');
       window.form.adForm.classList.add('ad-form--disabled');
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
-      window.main.getDisabledElements(window.main.filtersSelect);
-      var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-      for (var i = 0; i < pins.length; i++) {
-        var pin = pins[i];
-        pin.remove();
-      }
+      window.main.getDisabledElements(window.pins.mapFilters);
+      window.render.removePins();
       getMapPinMainPosition();
       window.main.activated = false;
     }
@@ -54,10 +48,11 @@
   getMapPinMainPosition();
 
   window.main.getDisabledElements(window.form.fieldsetInAdForm);
-  window.main.getDisabledElements(window.main.filtersSelect);
+  window.main.getDisabledElements(window.pins.mapFilters);
 
   resetButton.addEventListener('click', function () {
     window.form.adForm.reset();
+    window.pins.mapFilters.reset();
     window.main.getDisabledMap();
   });
 

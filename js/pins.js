@@ -1,32 +1,32 @@
 'use strict';
 (function () {
-
-  var similarListElement = document.querySelector('.map__pins');
-  var similarAdTemplate = document.querySelector('#pin')
-  .content;
-
-  var renderAd = function (ad) {
-    var adElement = similarAdTemplate.cloneNode(true);
-
-    adElement.querySelector('.map__pin').style.left = ad.location.x - (window.constants.AD_WIDTH / 2) + 'px';
-    adElement.querySelector('.map__pin').style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
-    adElement.querySelector('.map__pin img').src = ad.author.avatar;
-    adElement.querySelector('.map__pin img').alt = ad.offer.title;
-
-    return adElement;
-  };
-
-  var getFragment = function (data) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      fragment.appendChild(renderAd(data[i]));
+  window.pins = {
+    mapFilters: document.querySelector('.map__filters'),
+    housingType: document.querySelector('select[name="housing-type"]'),
+    appendNewAds: function () {
+      window.backend.load(loadHandler, errorPinHandler);
     }
-    return fragment;
   };
 
-  var loadHandler = function (ads) {
-    var limitAds = ads.slice(0, 5);
-    similarListElement.appendChild(getFragment(limitAds));
+  var ads = [];
+
+  var updateAds = function () {
+    var sameTypeAds = ads.filter(function (ad) {
+      return window.pins.housingType.value === 'any' || ad.offer.type === window.pins.housingType.value;
+    });
+    window.render.removePins();
+    window.render.renderPins(sameTypeAds);
+  };
+
+  window.pins.housingType.addEventListener('change', function (evt) {
+    var newType = evt.target.value;
+    window.pins.housingType.value = newType;
+    updateAds();
+  });
+
+  var loadHandler = function (data) {
+    ads = data;
+    updateAds();
   };
 
   var errorPinHandler = function (errorMessage) {
@@ -39,10 +39,6 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-  window.appendNewAds = function () {
-    window.backend.load(loadHandler, errorPinHandler);
   };
 
 })();
