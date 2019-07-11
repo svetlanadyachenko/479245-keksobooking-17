@@ -4,12 +4,12 @@
   var housingType = document.querySelector('select[name="housing-type"]');
   var ads = [];
 
-  var getRemovePins = function (data) {
-    for (var i = 0; i < data.length; i++) {
-      var pin = data[i];
-      pin.remove();
-    }
-  };
+  // var getRemovePins = function (data) {
+  //   for (var i = 0; i < data.length; i++) {
+  //     var pin = data[i];
+  //     pin.remove();
+  //   }
+  // };
 
   var updateAds = function () {
     var sameTypeAds = ads.filter(function (ad) {
