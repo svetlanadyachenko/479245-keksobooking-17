@@ -23,9 +23,18 @@
     return fragment;
   };
 
-  window.render = function (data) {
-    var limitData = (data.slice(0, 5));
-    similarListElement.appendChild(getFragment(limitData));
+  window.render = {
+    renderPins: function (data) {
+      var limitData = data.slice(window.constants.MIN_PIN_ON_MAP, window.constants.MAX_PIN_ON_MAP);
+      similarListElement.appendChild(getFragment(limitData));
+    },
+    removePins: function () {
+      var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      for (var i = 0; i < pins.length; i++) {
+        var pin = pins[i];
+        pin.remove();
+      }
+    }
   };
 
 })();

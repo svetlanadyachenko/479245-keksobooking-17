@@ -5,6 +5,8 @@
     TYPES: ['palace', 'flat', 'house', 'bungalo'],
     ESC_KEYCODE: 27,
     AD_QUANTITY: 5,
+    MAX_PIN_ON_MAP: 5,
+    MIN_PIN_ON_MAP: 0,
     AD_WIDTH: 50,
     AD_HEIGHT: 70,
     MAP_PIN_MAIN_X: 570,
