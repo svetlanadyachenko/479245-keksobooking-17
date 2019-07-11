@@ -24,7 +24,7 @@
       mapElement.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
       window.main.removeDisabledElements(window.form.fieldsetInAdForm);
-      window.main.removeDisabledElements(window.filtersForm.filtersSelect);
+      window.main.removeDisabledElements(window.mapFilters);
       window.appendNewAds();
       window.main.activated = true;
     },
@@ -32,7 +32,7 @@
       mapElement.classList.add('map--faded');
       window.form.adForm.classList.add('ad-form--disabled');
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
-      window.main.getDisabledElements(window.filtersForm.filtersSelect);
+      window.main.getDisabledElements(window.mapFilters);
       var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
       for (var i = 0; i < pins.length; i++) {
         var pin = pins[i];
@@ -52,7 +52,7 @@
   getMapPinMainPosition();
 
   window.main.getDisabledElements(window.form.fieldsetInAdForm);
-  window.main.getDisabledElements(window.filtersForm.filtersSelect);
+  window.main.getDisabledElements(window.mapFilters);
 
   resetButton.addEventListener('click', function () {
     window.form.adForm.reset();
