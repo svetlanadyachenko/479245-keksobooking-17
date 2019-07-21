@@ -34,19 +34,20 @@
     cardOfferType();
     cardElement.querySelector('.popup .popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     cardElement.querySelector('.popup .popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
+
     cardElement.querySelector('.popup .popup__features').textContent = ad.offer.features;
     var cardOfferFeatures = function () {
-      switch (ad.offer.features) {
+      switch (ad.offer.feature) {
         case 'wifi':
-          cardElement.classList.add('popup__feature', 'popup__feature--wifi');
+          cardElement.classList.add('popup__feature--wifi');
           break;
 
         case 'dishwasher':
-          cardElement.classList.add('popup__feature', 'popup__feature--dishwasher');
+          cardElement.classList.add('popup__feature--dishwasher');
           break;
 
         case 'parking':
-          cardElement.classList.add('popup__feature', 'popup__feature--parking');
+          cardElement.classList.add('popup__feature--parking');
           break;
 
         case 'washer':

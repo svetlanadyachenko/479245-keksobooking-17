@@ -10,20 +10,18 @@
 
   var ads = [];
 
-
   var updateAds = function () {
     var sameTypeAds = ads.filter(function (ad) {
       return window.pins.housingType.value === 'any' || ad.offer.type === window.pins.housingType.value;
     });
     window.render.removePins();
     window.render.renderPins(sameTypeAds);
-    window.render.renderCard(sameTypeAds);
+    window.render.renderCard(ads);
   };
 
   window.pins.housingType.addEventListener('change', function (evt) {
     var newType = evt.target.value;
-    window.pins.housingType.value = newType;
-    updateAds();
+    updateAds(newType);
   });
 
   var loadHandler = function (data) {
