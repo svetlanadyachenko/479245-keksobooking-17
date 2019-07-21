@@ -11,65 +11,36 @@
     cardElement.querySelector('.popup .popup__title').textContent = ad.offer.title;
     cardElement.querySelector('.popup .popup__text--address').textContent = ad.offer.address;
     cardElement.querySelector('.popup .popup__text--price').textContent = ad.offer.price + '₽/ночь';
-    cardElement.querySelector('.popup .popup__type').textContent = ad.offer.type;
-    var cardOfferType = function () {
-      switch (ad.offer.type) {
-        case 'flat':
-          ad.offer.type = 'Квартира';
-          break;
-
-        case 'bungalo':
-          ad.offer.type = 'Бунгало';
-          break;
-
-        case 'house':
-          ad.offer.type = 'Дом';
-          break;
-
-        case 'palace':
-          ad.offer.type = 'Дворец';
-          break;
-      }
-    };
-    cardOfferType();
+    cardElement.querySelector('.popup .popup__type').textContent = window.constants.TYPE_BY_TYPE[ad.offer.type];
     cardElement.querySelector('.popup .popup__text--capacity').textContent = ad.offer.rooms + ' комнаты для ' + ad.offer.guests + ' гостей';
     cardElement.querySelector('.popup .popup__text--time').textContent = 'Заезд после ' + ad.offer.checkin + ', выезд до ' + ad.offer.checkout;
 
-    cardElement.querySelector('.popup .popup__features').textContent = ad.offer.features;
-    var cardOfferFeatures = function () {
-      switch (ad.offer.feature) {
-        case 'wifi':
-          cardElement.classList.add('popup__feature--wifi');
-          break;
+    var features = cardElement.querySelector('.popup .popup__features');
+    features.innerHTML = '';
+    if (ad.offer.features.length) {
+      ad.offer.features.forEach(function (feature) {
+        var featureElement = document.createElement('li');
+        featureElement.classList.add('popup__feature', 'popup__feature--' + feature);
+        features.appendChild(featureElement);
+      });
+    } else {
+      features.remove();
+    }
 
-        case 'dishwasher':
-          cardElement.classList.add('popup__feature--dishwasher');
-          break;
-
-        case 'parking':
-          cardElement.classList.add('popup__feature--parking');
-          break;
-
-        case 'washer':
-          cardElement.classList.add('popup__feature', 'popup__feature--washer');
-          break;
-
-        case 'elevator':
-          cardElement.classList.add('popup__feature', 'popup__feature--elevator');
-          break;
-
-        case 'conditioner':
-          cardElement.classList.add('popup__feature', 'popup__feature--conditioner');
-          break;
-      }
-    };
-    cardOfferFeatures();
     cardElement.querySelector('.popup .popup__description').textContent = ad.offer.description;
 
-    var photos = ad.offer.photos;
-    photos.forEach(function (it) {
-      cardElement.querySelector('.popup .popup__photos img').src = it;
-    });
+    var photos = cardElement.querySelector('.popup .popup__photos');
+    var image = photos.querySelector('img').cloneNode(true);
+    photos.innerHTML = '';
+    if (ad.offer.photos.length) {
+      ad.offer.photos.forEach(function (src) {
+        var photoElement = image.cloneNode(true);
+        photoElement.src = src;
+        photos.appendChild(photoElement);
+      });
+    } else {
+      features.remove();
+    }
 
     cardElement.querySelector('.popup .popup__avatar').src = ad.author.avatar;
 
@@ -95,13 +66,13 @@
     return fragment;
   };
 
-  var getCardFragment = function (data) {
-    var cardFragment = document.createDocumentFragment();
-    for (var i = 0; i < data.length; i++) {
-      cardFragment.appendChild(renderCard(data[0]));
-    }
-    return cardFragment;
-  };
+  // var getCardFragment = function (data) {
+  //   var cardFragment = document.createDocumentFragment();
+  //   for (var i = 0; i < data.length; i++) {
+  //     cardFragment.appendChild(renderCard(data[0]));
+  //   }
+  //   return cardFragment;
+  // };
 
   window.render = {
     mapElement: document.querySelector('.map'),
@@ -117,7 +88,7 @@
       }
     },
     renderCard: function (data) {
-      window.render.mapElement.insertBefore(getCardFragment(data), filtersContainer);
+      window.render.mapElement.insertBefore(renderCard(data), filtersContainer);
     }
   };
 

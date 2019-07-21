@@ -16,12 +16,11 @@
     });
     window.render.removePins();
     window.render.renderPins(sameTypeAds);
-    window.render.renderCard(ads);
+    window.render.renderCard(ads[9]);
   };
 
-  window.pins.housingType.addEventListener('change', function (evt) {
-    var newType = evt.target.value;
-    updateAds(newType);
+  window.pins.housingType.addEventListener('change', function () {
+    updateAds();
   });
 
   var loadHandler = function (data) {
