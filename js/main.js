@@ -60,4 +60,9 @@
     window.main.getDisabledMap();
   });
 
+  // var closeCardButton = document.querySelector('.popup__close');
+  // closeCardButton.addEventListener('click', function () {
+  //   window.render.removeCard();
+  // });
+
 })();

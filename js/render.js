@@ -90,6 +90,10 @@
     renderCard: function (data) {
       window.render.mapElement.insertBefore(renderCard(data), filtersContainer);
     }
+    // removeCard: function () {
+    //   var mapCard = document.querySelector('.popup');
+    //   mapCard.remove();
+    // }
   };
 
 })();

@@ -16,7 +16,7 @@
     });
     window.render.removePins();
     window.render.renderPins(sameTypeAds);
-    window.render.renderCard(ads[9]);
+    window.render.renderCard(ads[0]);
   };
 
   window.pins.housingType.addEventListener('change', function () {
