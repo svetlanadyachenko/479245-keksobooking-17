@@ -22,6 +22,7 @@
 
   window.pins.housingType.addEventListener('change', function (evt) {
     var newType = evt.target.value;
+    window.pins.housingType.value = newType;
     updateAds();
   });
 
