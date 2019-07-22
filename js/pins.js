@@ -39,5 +39,10 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
+  // var activePin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  // activePin.addEventListener('click', function () {
+  //   activePin.classList.add('.map__pin:not(.map__pin--main):active');
+  //   window.render.renderCard(ads[1]);
+  // });
 
 })();
