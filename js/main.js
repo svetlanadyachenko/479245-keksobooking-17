@@ -2,34 +2,38 @@
 (function () {
 
   var resetButton = document.querySelector('.ad-form__reset');
-  var mapElement = document.querySelector('.map');
-  mapElement.classList.add('map--faded');
+  window.render.mapElement.classList.add('map--faded');
 
   window.main = {
     activated: false,
+
     mapPinMain: document.querySelector('.map__pin--main'),
+
     getDisabledElements: function (elements) {
       for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('disabled', 'disabled');
       }
       return elements;
     },
+
     removeDisabledElements: function (elements) {
       for (var i = 0; i < elements.length; i++) {
         elements[i].removeAttribute('disabled');
       }
       return elements;
     },
+
     getActiveMap: function () {
-      mapElement.classList.remove('map--faded');
+      window.render.mapElement.classList.remove('map--faded');
       window.form.adForm.classList.remove('ad-form--disabled');
       window.main.removeDisabledElements(window.form.fieldsetInAdForm);
       window.main.removeDisabledElements(window.pins.mapFilters);
       window.pins.appendNewAds();
       window.main.activated = true;
     },
+
     getDisabledMap: function () {
-      mapElement.classList.add('map--faded');
+      window.render.mapElement.classList.add('map--faded');
       window.form.adForm.classList.add('ad-form--disabled');
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
       window.main.getDisabledElements(window.pins.mapFilters);
@@ -55,5 +59,10 @@
     window.pins.mapFilters.reset();
     window.main.getDisabledMap();
   });
+
+  // var closeCardButton = document.querySelector('.popup__close');
+  // closeCardButton.addEventListener('click', function () {
+  //   window.render.removeCard();
+  // });
 
 })();

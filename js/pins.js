@@ -16,11 +16,10 @@
     });
     window.render.removePins();
     window.render.renderPins(sameTypeAds);
+    window.render.renderCard(ads[0]);
   };
 
-  window.pins.housingType.addEventListener('change', function (evt) {
-    var newType = evt.target.value;
-    window.pins.housingType.value = newType;
+  window.pins.housingType.addEventListener('change', function () {
     updateAds();
   });
 
@@ -40,5 +39,10 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
+  // var activePin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  // activePin.addEventListener('click', function () {
+  //   activePin.classList.add('.map__pin:not(.map__pin--main):active');
+  //   window.render.renderCard(ads[1]);
+  // });
 
 })();

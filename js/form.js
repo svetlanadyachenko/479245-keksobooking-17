@@ -34,6 +34,13 @@
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
   });
 
+  // var rooms = document.querySelector('select[name="rooms"]');
+  // var capacity = document.querySelector('select[name="capacity"]');
+
+  // rooms.addEventListener('change', function () {
+  //   capacity.value = window.constants.CAPACITY_BY_ROOMS[rooms.value];
+  // });
+
   var saveHandler = function () {
     window.main.getDisabledMap();
   };
