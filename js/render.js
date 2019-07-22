@@ -39,7 +39,7 @@
         photos.appendChild(photoElement);
       });
     } else {
-      features.remove();
+      photos.remove();
     }
 
     cardElement.querySelector('.popup .popup__avatar').src = ad.author.avatar;
