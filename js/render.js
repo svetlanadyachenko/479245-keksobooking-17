@@ -78,6 +78,9 @@
     adElement.querySelector('.map__pin').addEventListener('click', function () {
       window.render.removeCard();
       renderCardElement(ad);
+      if (adElement === null) {
+        adElement.querySelector('.map__pin').classList.add('map__pin--active');
+      }
     });
 
     return adElement;
