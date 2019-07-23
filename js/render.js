@@ -48,6 +48,8 @@
       window.render.removeCard();
     });
 
+    document.addEventListener('keydown', onCardEscPress);
+
     return cardElement;
   };
 
@@ -90,17 +92,22 @@
     removeCard: function () {
       var mapCard = window.render.mapElement.querySelector('.popup');
       mapCard.remove();
-
-      mapCard.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.constants.ESC_KEYCODE) {
-          mapCard.remove();
-        }
-      });
     }
   };
 
   var renderCardElement = function (data) {
     window.render.mapElement.insertBefore(renderCard(data), filtersContainer);
+  };
+
+  var closeCard = function () {
+    window.render.removeCard();
+    document.removeEventListener('keydown', onCardEscPress);
+  };
+
+  var onCardEscPress = function (evt) {
+    if (evt.keyCode === window.constants.ESC_KEYCODE) {
+      closeCard();
+    }
   };
 
 })();
