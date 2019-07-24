@@ -34,9 +34,29 @@
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
   });
 
-  // var rooms = document.querySelector('select[name="rooms"]');
-  // var capacity = document.querySelector('select[name="capacity"]');
-
+  var rooms = document.querySelector('select[name="rooms"]');
+  var capacity = document.querySelector('select[name="capacity"]');
+  var validateFeeling = function (option, number1, number2) {
+    if (option.value === number1 || option.value === number2) {
+      option.setCustomValidity('');
+    } else {
+      option.setCustomValidity('Выбранное количество гостей не подходит под количество комнат. Выберите другой вариант.');
+    }
+  };
+  capacity.addEventListener('change', function () {
+    if (rooms.value === 1) {
+      validateFeeling(capacity, 1);
+    } else if
+    (rooms.value === 2) {
+      validateFeeling(capacity, 2, 1);
+    } else if
+    (rooms.value === 3) {
+      validateFeeling(capacity, 3, 2);
+    } else if
+    (rooms.value === 100) {
+      validateFeeling(capacity, 0);
+    }
+  });
   // rooms.addEventListener('change', function () {
   //   capacity.value = window.constants.CAPACITY_BY_ROOMS[rooms.value];
   // });
