@@ -44,27 +44,24 @@
 
     cardElement.querySelector('.popup .popup__avatar').src = ad.author.avatar;
 
-    var closeCard = function () {
-      window.render.removeCard();
-      document.removeEventListener('keydown', onCardEscPress);
-      document.removeEventListener('click', onCardButtonPress);
-    };
-
-    var onCardButtonPress = function () {
+    cardElement.querySelector('.popup .popup__close').addEventListener('click', function () {
       closeCard();
-    };
-
-    cardElement.querySelector('.popup .popup__close').addEventListener('click', onCardButtonPress);
-
-    var onCardEscPress = function (evt) {
-      if (evt.keyCode === window.constants.ESC_KEYCODE) {
-        closeCard();
-      }
-    };
+    });
 
     document.addEventListener('keydown', onCardEscPress);
 
     return cardElement;
+  };
+
+  var closeCard = function () {
+    window.render.removeCard();
+    document.removeEventListener('keydown', onCardEscPress);
+  };
+
+  var onCardEscPress = function (evt) {
+    if (evt.keyCode === window.constants.ESC_KEYCODE) {
+      closeCard();
+    }
   };
 
   var renderAd = function (ad) {
@@ -74,13 +71,15 @@
     adElement.querySelector('.map__pin').style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
     adElement.querySelector('.map__pin img').src = ad.author.avatar;
     adElement.querySelector('.map__pin img').alt = ad.offer.title;
-
-    adElement.querySelector('.map__pin').addEventListener('click', function () {
-      window.render.removeCard();
-      renderCardElement(ad);
-      if (adElement === null) {
-        adElement.querySelector('.map__pin').classList.add('map__pin--active');
+    var pin = adElement.querySelector('.map__pin:not(.map__pin--main)');
+    pin.addEventListener('click', function () {
+      closeCard();
+      var pinActive = document.querySelector('.map__pin .map__pin--active');
+      if (pinActive !== null) {
+        pin.classList.remove('map__pin--active');
       }
+      renderCardElement(ad);
+      pin.classList.add('map__pin--active');
     });
 
     return adElement;
