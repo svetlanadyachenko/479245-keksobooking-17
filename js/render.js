@@ -44,7 +44,28 @@
 
     cardElement.querySelector('.popup .popup__avatar').src = ad.author.avatar;
 
+    cardElement.querySelector('.popup .popup__close').addEventListener('click', function () {
+      closeCard();
+    });
+
+    document.addEventListener('keydown', onCardEscPress);
+
     return cardElement;
+  };
+
+  var closeCard = function () {
+    window.render.removeCard();
+    document.removeEventListener('keydown', onCardEscPress);
+    var pinActive = window.render.mapElement.querySelector('.map__pin--active');
+    if (pinActive !== null) {
+      pinActive.classList.remove('map__pin--active');
+    }
+  };
+
+  var onCardEscPress = function (evt) {
+    if (evt.keyCode === window.constants.ESC_KEYCODE) {
+      closeCard();
+    }
   };
 
   var renderAd = function (ad) {
@@ -54,6 +75,12 @@
     adElement.querySelector('.map__pin').style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
     adElement.querySelector('.map__pin img').src = ad.author.avatar;
     adElement.querySelector('.map__pin img').alt = ad.offer.title;
+    var pin = adElement.querySelector('.map__pin');
+    pin.addEventListener('click', function () {
+      closeCard();
+      renderCardElement(ad);
+      pin.classList.add('map__pin--active');
+    });
 
     return adElement;
   };
@@ -65,14 +92,6 @@
     }
     return fragment;
   };
-
-  // var getCardFragment = function (data) {
-  //   var cardFragment = document.createDocumentFragment();
-  //   for (var i = 0; i < data.length; i++) {
-  //     cardFragment.appendChild(renderCard(data[0]));
-  //   }
-  //   return cardFragment;
-  // };
 
   window.render = {
     mapElement: document.querySelector('.map'),
@@ -87,13 +106,16 @@
         pin.remove();
       }
     },
-    renderCard: function (data) {
-      window.render.mapElement.insertBefore(renderCard(data), filtersContainer);
+    removeCard: function () {
+      var mapCard = window.render.mapElement.querySelector('.popup');
+      if (mapCard !== null) {
+        mapCard.remove();
+      }
     }
-    // removeCard: function () {
-    //   var mapCard = document.querySelector('.popup');
-    //   mapCard.remove();
-    // }
+  };
+
+  var renderCardElement = function (data) {
+    window.render.mapElement.insertBefore(renderCard(data), filtersContainer);
   };
 
 })();
