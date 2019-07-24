@@ -71,12 +71,12 @@
     adElement.querySelector('.map__pin').style.top = ad.location.y - window.constants.AD_HEIGHT + 'px';
     adElement.querySelector('.map__pin img').src = ad.author.avatar;
     adElement.querySelector('.map__pin img').alt = ad.offer.title;
-    var pin = adElement.querySelector('.map__pin:not(.map__pin--main)');
+    var pin = adElement.querySelector('.map__pin');
     pin.addEventListener('click', function () {
       closeCard();
-      var pinActive = document.querySelector('.map__pin .map__pin--active');
+      var pinActive = window.render.mapElement.querySelector('.map__pin--active');
       if (pinActive !== null) {
-        pin.classList.remove('map__pin--active');
+        pinActive.classList.remove('map__pin--active');
       }
       renderCardElement(ad);
       pin.classList.add('map__pin--active');
