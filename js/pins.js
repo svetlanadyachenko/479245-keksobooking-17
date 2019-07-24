@@ -18,6 +18,10 @@
     window.render.renderPins(sameTypeAds);
   };
 
+  window.pins.mapFilters.addEventListener('click', function () {
+    window.render.closeCard();
+  });
+
   window.pins.housingType.addEventListener('change', function () {
     updateAds();
   });
