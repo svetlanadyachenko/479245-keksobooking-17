@@ -28,13 +28,21 @@
       flat: 'Квартира',
       house: 'Дом',
       palace: 'Дворец'
+    },
+    CAPACITY_BY_ROOMS: {
+      1: {
+        allowed: [2]
+      },
+      2: {
+        allowed: [2, 1]
+      },
+      3: {
+        allowed: [2, 1, 0]
+      },
+      100: {
+        allowed: [3]
+      }
     }
-    // CAPACITY_BY_ROOMS: {
-    //   1: 1,
-    //   2: [2, 1],
-    //   3: [3, 2, 1],
-    //   100: 0
-    // }
   };
 
 })();

@@ -37,17 +37,16 @@
   var rooms = document.querySelector('select[name="rooms"]');
   var capacity = document.querySelector('select[name="capacity"]');
 
-  var validateCapacity = function (select) {
-    if (rooms.value === capacity.value) {
-      select.setCustomValidity('');
-    } else {
-      select.setCustomValidity('Выбранное количество гостей не подходит под количество комнат. Выберите другой вариант.');
-    }
+  var validateCapacity = function (evt) {
+    var select = evt.target.selectedIndex;
+    var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
+    var valid = !!~allowed.indexOf(select);
+    var validity = valid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
+    capacity.setCustomValidity(validity);
+    capacity.reportValidity();
   };
 
-  capacity.addEventListener('change', function () {
-    validateCapacity(capacity);
-  });
+  capacity.addEventListener('change', validateCapacity);
 
   var saveHandler = function () {
     window.main.getDisabledMap();
