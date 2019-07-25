@@ -40,7 +40,7 @@
   var validateCapacity = function (evt) {
     var select = evt.target.selectedIndex;
     var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
-    var valid = !!~allowed.indexOf(select);
+    var valid = allowed.includes(select);
     var validity = valid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
     capacity.setCustomValidity(validity);
     capacity.reportValidity();
@@ -48,12 +48,32 @@
 
   capacity.addEventListener('change', validateCapacity);
 
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var main = document.querySelector('main');
+
   var saveHandler = function () {
+    var success = successTemplate.cloneNode(true);
+    main.appendChild(success);
+    var closeSuccessMessage = function () {
+      success.remove();
+      document.removeEventListener('keydown', onSuccessMessageEscPress);
+    };
+    var onSuccessMessageEscPress = function (evt) {
+      if (evt.keyCode === window.constants.ESC_KEYCODE) {
+        closeSuccessMessage();
+      }
+    };
+    success.addEventListener('click', function () {
+      closeSuccessMessage();
+    });
+    document.addEventListener('keydown', onSuccessMessageEscPress);
+
+    window.form.adForm.reset();
+    window.pins.mapFilters.reset();
+    window.render.closeCard();
     window.main.getDisabledMap();
   };
-
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var main = document.querySelector('main');
 
   var errorHandler = function () {
     var error = errorTemplate.cloneNode(true);
