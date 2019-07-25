@@ -9,7 +9,7 @@
 
   window.form.adForm.classList.add('ad-form--disabled');
 
-  var select = document.querySelector('select[name="type"]');
+  var typeSelect = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
   var setAttributeForPrice = function (type) {
@@ -17,8 +17,8 @@
     price.setAttribute('min', type);
   };
 
-  select.addEventListener('change', function () {
-    setAttributeForPrice(window.constants.PRICE_BY_TYPE[select.value]);
+  typeSelect.addEventListener('change', function () {
+    setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
   });
 
   var timeIn = document.querySelector('select[name="timein"]');
@@ -36,30 +36,18 @@
 
   var rooms = document.querySelector('select[name="rooms"]');
   var capacity = document.querySelector('select[name="capacity"]');
-  var validateFeeling = function (option, number1, number2) {
-    if (option.value === number1 || option.value === number2) {
-      option.setCustomValidity('');
+
+  var validateCapacity = function (select) {
+    if (rooms.value === capacity.value) {
+      select.setCustomValidity('');
     } else {
-      option.setCustomValidity('Выбранное количество гостей не подходит под количество комнат. Выберите другой вариант.');
+      select.setCustomValidity('Выбранное количество гостей не подходит под количество комнат. Выберите другой вариант.');
     }
   };
+
   capacity.addEventListener('change', function () {
-    if (rooms.value === 1) {
-      validateFeeling(capacity, 1);
-    } else if
-    (rooms.value === 2) {
-      validateFeeling(capacity, 2, 1);
-    } else if
-    (rooms.value === 3) {
-      validateFeeling(capacity, 3, 2);
-    } else if
-    (rooms.value === 100) {
-      validateFeeling(capacity, 0);
-    }
+    validateCapacity(capacity);
   });
-  // rooms.addEventListener('change', function () {
-  //   capacity.value = window.constants.CAPACITY_BY_ROOMS[rooms.value];
-  // });
 
   var saveHandler = function () {
     window.main.getDisabledMap();
