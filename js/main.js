@@ -6,23 +6,19 @@
 
   window.main = {
     activated: false,
-
     mapPinMain: document.querySelector('.map__pin--main'),
-
     getDisabledElements: function (elements) {
       for (var i = 0; i < elements.length; i++) {
         elements[i].setAttribute('disabled', 'disabled');
       }
       return elements;
     },
-
     removeDisabledElements: function (elements) {
       for (var i = 0; i < elements.length; i++) {
         elements[i].removeAttribute('disabled');
       }
       return elements;
     },
-
     getActiveMap: function () {
       window.render.mapElement.classList.remove('map--faded');
       window.pins.appendNewAds();
@@ -31,7 +27,6 @@
       window.main.removeDisabledElements(window.pins.mapFilters);
       window.main.activated = true;
     },
-
     getDisabledMap: function () {
       window.render.mapElement.classList.add('map--faded');
       window.render.removePins();
