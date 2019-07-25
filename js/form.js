@@ -4,7 +4,22 @@
   window.form = {
     adForm: document.querySelector('.ad-form'),
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
-    addressInput: document.querySelector('input[name="address"]')
+    addressInput: document.querySelector('input[name="address"]'),
+    removeChangeListeners: function () {
+      typeSelect.removeEventListener('change', function () {
+        setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
+      });
+      timeIn.removeEventListener('change', function () {
+        var timeInSelectedIndex = timeIn.options.selectedIndex;
+        timeOut.value = timeOut.options[timeInSelectedIndex].value;
+      });
+
+      timeOut.removeEventListener('change', function () {
+        var timeOutSelectedIndex = timeOut.options.selectedIndex;
+        timeIn.value = timeIn.options[timeOutSelectedIndex].value;
+      });
+      capacity.removeEventListener('change', validateCapacity);
+    }
   };
 
   window.form.adForm.classList.add('ad-form--disabled');

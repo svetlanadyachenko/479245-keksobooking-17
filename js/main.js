@@ -37,6 +37,7 @@
       window.render.removePins();
       getMapPinMainPosition();
       window.form.adForm.classList.add('ad-form--disabled');
+      window.form.removeChangeListeners();
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
       window.main.getDisabledElements(window.pins.mapFilters);
       window.main.activated = false;
