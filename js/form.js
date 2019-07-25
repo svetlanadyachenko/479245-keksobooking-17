@@ -9,7 +9,7 @@
 
   window.form.adForm.classList.add('ad-form--disabled');
 
-  var select = document.querySelector('select[name="type"]');
+  var typeSelect = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
   var setAttributeForPrice = function (type) {
@@ -17,8 +17,8 @@
     price.setAttribute('min', type);
   };
 
-  select.addEventListener('change', function () {
-    setAttributeForPrice(window.constants.PRICE_BY_TYPE[select.value]);
+  typeSelect.addEventListener('change', function () {
+    setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
   });
 
   var timeIn = document.querySelector('select[name="timein"]');
@@ -34,12 +34,19 @@
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
   });
 
-  // var rooms = document.querySelector('select[name="rooms"]');
-  // var capacity = document.querySelector('select[name="capacity"]');
+  var rooms = document.querySelector('select[name="rooms"]');
+  var capacity = document.querySelector('select[name="capacity"]');
 
-  // rooms.addEventListener('change', function () {
-  //   capacity.value = window.constants.CAPACITY_BY_ROOMS[rooms.value];
-  // });
+  var validateCapacity = function (evt) {
+    var select = evt.target.selectedIndex;
+    var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
+    var valid = !!~allowed.indexOf(select);
+    var validity = valid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
+    capacity.setCustomValidity(validity);
+    capacity.reportValidity();
+  };
+
+  capacity.addEventListener('change', validateCapacity);
 
   var saveHandler = function () {
     window.main.getDisabledMap();
