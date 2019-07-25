@@ -38,9 +38,9 @@
   var capacity = document.querySelector('select[name="capacity"]');
 
   var validateCapacity = function (evt) {
-    var select = evt.target.selectedIndex;
+    var selectedIndex = evt.target.selectedIndex;
     var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
-    var valid = allowed.includes(select);
+    var valid = allowed.includes(selectedIndex);
     var validity = valid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
     capacity.setCustomValidity(validity);
     capacity.reportValidity();
