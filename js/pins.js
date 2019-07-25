@@ -5,6 +5,12 @@
     housingType: document.querySelector('select[name="housing-type"]'),
     appendNewAds: function () {
       window.backend.load(loadHandler, errorPinHandler);
+    },
+    removeChangeListenersInPins: function () {
+      window.pins.housingType.removeEventListener('change', function () {
+        window.render.closeCard();
+        updateAds();
+      });
     }
   };
 

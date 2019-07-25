@@ -37,9 +37,10 @@
       window.render.removePins();
       getMapPinMainPosition();
       window.form.adForm.classList.add('ad-form--disabled');
-      window.form.removeChangeListeners();
+      window.form.removeChangeListenersInForm();
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
       window.main.getDisabledElements(window.pins.mapFilters);
+      window.pins.removeChangeListenersInPins();
       window.main.activated = false;
     }
   };

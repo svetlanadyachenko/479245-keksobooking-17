@@ -5,7 +5,7 @@
     adForm: document.querySelector('.ad-form'),
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
-    removeChangeListeners: function () {
+    removeChangeListenersInForm: function () {
       typeSelect.removeEventListener('change', function () {
         setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
       });
