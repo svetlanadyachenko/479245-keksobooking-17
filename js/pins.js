@@ -6,7 +6,7 @@
       window.backend.load(loadHandler, errorPinHandler);
     },
     removeChangeListenersInPins: function () {
-      window.pins.housingType.removeEventListener('change', function () {
+      housingType.removeEventListener('change', function () {
         window.render.closeCard();
         updateAds();
       });
