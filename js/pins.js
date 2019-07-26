@@ -10,14 +10,18 @@
         window.render.closeCard();
         updateAds();
       });
+      housingRooms.removeEventListener('change', function () {
+        window.render.closeCard();
+        updateRoomsAds();
+      });
     }
   };
 
   var housingType = document.querySelector('select[name="housing-type"]');
   // var housingPrice = document.querySelector('select[name="housing-price"]');
-  var housingRooms = document.querySelector('select[name="housing-rooms"]');
-  // var housingGuests =  document.querySelector('select[name="housing-guests"]');
-  // var housingFeatures =  document.querySelector('select[name="housing-features"]');
+  var housingRooms = window.pins.mapFilters.querySelector('select[name="housing-rooms"]');
+  // var housingGuests = document.querySelector('select[name="housing-guests"]');
+  // var housingFeatures = document.querySelector('input[name="features"]');
 
   var ads = [];
 
@@ -49,8 +53,8 @@
 
   var loadHandler = function (data) {
     ads = data;
-    updateAds();
     updateRoomsAds();
+    updateAds();
   };
 
   var errorPinHandler = function (errorMessage) {
