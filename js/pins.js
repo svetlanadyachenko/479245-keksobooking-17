@@ -31,7 +31,7 @@
 
   var updateRoomsAds = function () {
     var sameRoomsAds = ads.filter(function (ad) {
-      return housingRooms.value === 'any' || ad.offer.type === housingRooms.value;
+      return housingRooms.value === 'any' || ad.offer.rooms === housingRooms.value;
     });
     window.render.removePins();
     window.render.renderPins(sameRoomsAds);
