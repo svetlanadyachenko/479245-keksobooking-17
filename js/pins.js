@@ -2,32 +2,58 @@
 (function () {
   window.pins = {
     mapFilters: document.querySelector('.map__filters'),
-    housingType: document.querySelector('select[name="housing-type"]'),
     appendNewAds: function () {
       window.backend.load(loadHandler, errorPinHandler);
+    },
+    removeChangeListenersInPins: function () {
+      housingType.removeEventListener('change', function () {
+        window.render.closeCard();
+        updateAds();
+      });
+      housingRooms.removeEventListener('change', function () {
+        window.render.closeCard();
+        updateRoomsAds();
+      });
     }
   };
+
+  var housingType = document.querySelector('select[name="housing-type"]');
+  // var housingPrice = document.querySelector('select[name="housing-price"]');
+  var housingRooms = window.pins.mapFilters.querySelector('select[name="housing-rooms"]');
+  // var housingGuests = document.querySelector('select[name="housing-guests"]');
+  // var housingFeatures = document.querySelector('input[name="features"]');
 
   var ads = [];
 
   var updateAds = function () {
     var sameTypeAds = ads.filter(function (ad) {
-      return window.pins.housingType.value === 'any' || ad.offer.type === window.pins.housingType.value;
+      return housingType.value === 'any' || ad.offer.type === housingType.value;
     });
     window.render.removePins();
     window.render.renderPins(sameTypeAds);
   };
 
-  window.pins.mapFilters.addEventListener('click', function () {
+  var updateRoomsAds = function () {
+    var sameRoomsAds = ads.filter(function (ad) {
+      return housingRooms.value === 'any' || ad.offer.rooms === housingRooms.value;
+    });
+    window.render.removePins();
+    window.render.renderPins(sameRoomsAds);
+  };
+
+  housingType.addEventListener('change', function () {
     window.render.closeCard();
+    updateAds();
   });
 
-  window.pins.housingType.addEventListener('change', function () {
-    updateAds();
+  housingRooms.addEventListener('change', function () {
+    window.render.closeCard();
+    updateRoomsAds();
   });
 
   var loadHandler = function (data) {
     ads = data;
+    updateRoomsAds();
     updateAds();
   };
 
