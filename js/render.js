@@ -44,9 +44,11 @@
 
     cardElement.querySelector('.popup .popup__avatar').src = ad.author.avatar;
 
-    cardElement.querySelector('.popup .popup__close').addEventListener('click', function () {
+    var closeCardButton = cardElement.querySelector('.popup .popup__close');
+    var onCloseCardButtonClick = function () {
       window.render.closeCard();
-    });
+    };
+    closeCardButton.addEventListener('click', onCloseCardButtonClick);
 
     document.addEventListener('keydown', onCardEscPress);
 
@@ -68,11 +70,12 @@
     adElement.querySelector('.map__pin img').alt = ad.offer.title;
 
     var pin = adElement.querySelector('.map__pin');
-    pin.addEventListener('click', function () {
+    var onPinClick = function () {
       window.render.closeCard();
       renderCardElement(ad);
       pin.classList.add('map__pin--active');
-    });
+    };
+    pin.addEventListener('click', onPinClick);
 
     return adElement;
   };

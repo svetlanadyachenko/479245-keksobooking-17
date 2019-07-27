@@ -2,7 +2,6 @@
 (function () {
 
   window.constants = {
-    TYPES: ['palace', 'flat', 'house', 'bungalo'],
     ESC_KEYCODE: 27,
     AD_QUANTITY: 5,
     MAX_PIN_ON_MAP: 5,

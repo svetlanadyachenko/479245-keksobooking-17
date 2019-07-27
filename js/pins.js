@@ -6,54 +6,62 @@
       window.backend.load(loadHandler, errorPinHandler);
     },
     removeChangeListenersInPins: function () {
-      housingType.removeEventListener('change', function () {
-        window.render.closeCard();
-        updateAds();
-      });
-      housingRooms.removeEventListener('change', function () {
-        window.render.closeCard();
-        updateRoomsAds();
-      });
+      window.pins.mapFilters.removeEventListener('change', onFilterChange);
     }
   };
-
-  var housingType = document.querySelector('select[name="housing-type"]');
-  // var housingPrice = document.querySelector('select[name="housing-price"]');
-  var housingRooms = window.pins.mapFilters.querySelector('select[name="housing-rooms"]');
-  // var housingGuests = document.querySelector('select[name="housing-guests"]');
-  // var housingFeatures = document.querySelector('input[name="features"]');
 
   var ads = [];
 
   var updateAds = function () {
-    var sameTypeAds = ads.filter(function (ad) {
-      return housingType.value === 'any' || ad.offer.type === housingType.value;
+    var nodesFilters = window.pins.mapFilters.querySelectorAll('.map__filters option:checked:not([value="any"]), .map__filters input:checked');
+
+    var getFilterParams = function (nodes) {
+      var nodesArray = [].slice.call(nodes);
+      var getParams = function (node) {
+        return {
+          name: node.checked ? node.value : node.parentNode.name,
+          value: node.checked || node.value
+        };
+      };
+      return nodesArray.map(getParams);
+    };
+
+    var filterParams = getFilterParams(nodesFilters);
+
+    var filteredPins = ads.filter(function (ad) {
+      var getFeature = function (features, feature) {
+        return Object.assign({}, features, {[feature]: true});
+      };
+      var housingFeatures = ad.offer.features.reduce(getFeature, {});
+      var housingParams = {
+        'housing-type': ad.offer.type,
+        'housing_price': ad.offer.price < 10000
+             ? 'low'
+             : ad.offer.price > 50000
+                 ? 'hight'
+                 : 'middle',
+        'housing-rooms': '' + ad.offer.rooms,
+        'housing-guests': '' + ad.offer.guests
+      };
+      var assignedParams = Object.assign({}, housingParams, housingFeatures);
+      return filterParams.every(function (param) {
+        return assignedParams[param.name] === param.value;
+      });
     });
+
     window.render.removePins();
-    window.render.renderPins(sameTypeAds);
+    window.render.renderPins(filteredPins);
   };
 
-  var updateRoomsAds = function () {
-    var sameRoomsAds = ads.filter(function (ad) {
-      return housingRooms.value === 'any' || ad.offer.rooms === housingRooms.value;
-    });
-    window.render.removePins();
-    window.render.renderPins(sameRoomsAds);
-  };
-
-  housingType.addEventListener('change', function () {
+  var onFilterChange = function () {
     window.render.closeCard();
     updateAds();
-  });
+  };
 
-  housingRooms.addEventListener('change', function () {
-    window.render.closeCard();
-    updateRoomsAds();
-  });
+  window.pins.mapFilters.addEventListener('change', onFilterChange);
 
   var loadHandler = function (data) {
     ads = data;
-    updateRoomsAds();
     updateAds();
   };
 

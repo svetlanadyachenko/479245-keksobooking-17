@@ -6,19 +6,10 @@
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
     removeChangeListenersInForm: function () {
-      typeSelect.removeEventListener('change', function () {
-        setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
-      });
-      timeIn.removeEventListener('change', function () {
-        var timeInSelectedIndex = timeIn.options.selectedIndex;
-        timeOut.value = timeOut.options[timeInSelectedIndex].value;
-      });
-
-      timeOut.removeEventListener('change', function () {
-        var timeOutSelectedIndex = timeOut.options.selectedIndex;
-        timeIn.value = timeIn.options[timeOutSelectedIndex].value;
-      });
-      capacity.removeEventListener('change', validateCapacity);
+      typeSelect.removeEventListener('change', onTypeSelectChange);
+      timeIn.removeEventListener('change', onTimeInChange);
+      timeOut.removeEventListener('change', onTimeOutChange);
+      capacity.removeEventListener('change', onCapacityChange);
     }
   };
 
@@ -32,27 +23,33 @@
     price.setAttribute('min', type);
   };
 
-  typeSelect.addEventListener('change', function () {
+  var onTypeSelectChange = function () {
     setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
-  });
+  };
+
+  typeSelect.addEventListener('change', onTypeSelectChange);
 
   var timeIn = document.querySelector('select[name="timein"]');
   var timeOut = document.querySelector('select[name="timeout"]');
 
-  timeIn.addEventListener('change', function () {
+  var onTimeInChange = function () {
     var timeInSelectedIndex = timeIn.options.selectedIndex;
     timeOut.value = timeOut.options[timeInSelectedIndex].value;
-  });
+  };
 
-  timeOut.addEventListener('change', function () {
+  timeIn.addEventListener('change', onTimeInChange);
+
+  var onTimeOutChange = function () {
     var timeOutSelectedIndex = timeOut.options.selectedIndex;
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
-  });
+  };
+
+  timeOut.addEventListener('change', onTimeOutChange);
 
   var rooms = document.querySelector('select[name="rooms"]');
   var capacity = document.querySelector('select[name="capacity"]');
 
-  var validateCapacity = function (evt) {
+  var onCapacityChange = function (evt) {
     var selectedIndex = evt.target.selectedIndex;
     var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
     var valid = allowed.includes(selectedIndex);
@@ -61,7 +58,7 @@
     capacity.reportValidity();
   };
 
-  capacity.addEventListener('change', validateCapacity);
+  capacity.addEventListener('change', onCapacityChange);
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -79,11 +76,11 @@
         closeSuccessMessage();
       }
     };
-    success.addEventListener('click', function () {
+    var onSuccessMessageClick = function () {
       closeSuccessMessage();
-    });
+    };
+    success.addEventListener('click', onSuccessMessageClick);
     document.addEventListener('keydown', onSuccessMessageEscPress);
-
     window.form.adForm.reset();
     window.pins.mapFilters.reset();
     window.render.closeCard();
@@ -103,12 +100,14 @@
         closeErrorMessage();
       }
     };
-    errorButton.addEventListener('click', function () {
+    var onErrorButtonClick = function () {
       closeErrorMessage();
-    });
-    error.addEventListener('click', function () {
+    };
+    var onErrorMessageClick = function () {
       closeErrorMessage();
-    });
+    };
+    errorButton.addEventListener('click', onErrorButtonClick);
+    error.addEventListener('click', onErrorMessageClick);
     document.addEventListener('keydown', onErrorMessageEscPress);
   };
 
