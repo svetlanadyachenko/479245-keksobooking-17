@@ -1,7 +1,6 @@
 'use strict';
 (function () {
 
-  var resetButton = document.querySelector('.ad-form__reset');
   window.render.mapElement.classList.add('map--faded');
 
   window.main = {
@@ -31,11 +30,12 @@
       window.render.mapElement.classList.add('map--faded');
       window.render.removePins();
       getMapPinMainPosition();
+      window.resetPhoto();
       window.form.adForm.classList.add('ad-form--disabled');
-      window.form.removeChangeListenersInForm();
+      window.form.removeEventListenersInForm();
       window.main.getDisabledElements(window.form.fieldsetInAdForm);
       window.main.getDisabledElements(window.pins.mapFilters);
-      window.pins.removeChangeListenersInPins();
+      window.pins.removeEventListenersInPins();
       window.main.activated = false;
     }
   };
@@ -50,12 +50,5 @@
 
   window.main.getDisabledElements(window.form.fieldsetInAdForm);
   window.main.getDisabledElements(window.pins.mapFilters);
-
-  resetButton.addEventListener('click', function () {
-    window.form.adForm.reset();
-    window.pins.mapFilters.reset();
-    window.render.closeCard();
-    window.main.getDisabledMap();
-  });
 
 })();

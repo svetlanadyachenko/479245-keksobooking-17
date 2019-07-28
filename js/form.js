@@ -5,7 +5,7 @@
     adForm: document.querySelector('.ad-form'),
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
-    removeChangeListenersInForm: function () {
+    removeEventListenersInForm: function () {
       typeSelect.removeEventListener('change', onTypeSelectChange);
       timeIn.removeEventListener('change', onTimeInChange);
       timeOut.removeEventListener('change', onTimeOutChange);
@@ -111,9 +111,22 @@
     document.addEventListener('keydown', onErrorMessageEscPress);
   };
 
-  window.form.adForm.addEventListener('submit', function (evt) {
+  var resetButton = document.querySelector('.ad-form__reset');
+
+  var onSubmitButtonClick = function (evt) {
     window.backend.save(new FormData(window.form.adForm), saveHandler, errorHandler);
     evt.preventDefault();
-  });
+  };
+
+  window.form.adForm.addEventListener('submit', onSubmitButtonClick);
+
+  var onResetButtonClick = function () {
+    window.form.adForm.reset();
+    window.pins.mapFilters.reset();
+    window.render.closeCard();
+    window.main.getDisabledMap();
+  };
+
+  resetButton.addEventListener('click', onResetButtonClick);
 
 })();

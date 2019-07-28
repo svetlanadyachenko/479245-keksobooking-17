@@ -2,6 +2,10 @@
 (function () {
 
   window.constants = {
+    URL_LOAD: 'https://js.dump.academy/keksobooking/data',
+    URL_SAVE: 'https://js.dump.academy/keksobooking',
+    TIMEOUT: 10000,
+    DEBOUNCE_INTERVAL: 500,
     FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
     ESC_KEYCODE: 27,
     AD_QUANTITY: 5,

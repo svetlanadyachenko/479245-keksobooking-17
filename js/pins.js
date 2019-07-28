@@ -5,7 +5,7 @@
     appendNewAds: function () {
       window.backend.load(loadHandler, errorPinHandler);
     },
-    removeChangeListenersInPins: function () {
+    removeEventListenersInPins: function () {
       window.pins.mapFilters.removeEventListener('change', onFilterChange);
     }
   };
