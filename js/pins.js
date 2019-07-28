@@ -30,16 +30,22 @@
 
     var filteredPins = ads.filter(function (ad) {
       var getFeature = function (features, feature) {
-        return Object.assign({}, features, {[feature]: true});
+        return Object.assign({}, features, {[feature] : true});
       };
       var housingFeatures = ad.offer.features.reduce(getFeature, {});
+      var getPrice = function (price) {
+        switch (true) {
+          case price < 10000:
+            return 'low';
+          case price > 50000:
+            return 'high';
+          default:
+            return 'middle';
+        }
+      };
       var housingParams = {
         'housing-type': ad.offer.type,
-        'housing_price': ad.offer.price < 10000
-             ? 'low'
-             : ad.offer.price > 50000
-                 ? 'hight'
-                 : 'middle',
+        'housing-price': getPrice(ad.offer.price),
         'housing-rooms': '' + ad.offer.rooms,
         'housing-guests': '' + ad.offer.guests
       };

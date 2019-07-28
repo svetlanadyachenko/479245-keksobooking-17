@@ -2,6 +2,7 @@
 (function () {
 
   window.constants = {
+    FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
     ESC_KEYCODE: 27,
     AD_QUANTITY: 5,
     MAX_PIN_ON_MAP: 5,
