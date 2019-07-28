@@ -24,6 +24,7 @@
       window.form.adForm.classList.remove('ad-form--disabled');
       window.main.removeDisabledElements(window.form.fieldsetInAdForm);
       window.main.removeDisabledElements(window.pins.mapFilters);
+      window.form.addEventListenersInForm();
       window.main.activated = true;
     },
     getDisabledMap: function () {

@@ -5,6 +5,12 @@
     adForm: document.querySelector('.ad-form'),
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
+    addEventListenersInForm: function () {
+      typeSelect.addEventListener('change', onTypeSelectChange);
+      timeIn.addEventListener('change', onTimeInChange);
+      timeOut.addEventListener('change', onTimeOutChange);
+      capacity.addEventListener('change', onCapacityChange);
+    },
     removeEventListenersInForm: function () {
       typeSelect.removeEventListener('change', onTypeSelectChange);
       timeIn.removeEventListener('change', onTimeInChange);
@@ -27,8 +33,6 @@
     setAttributeForPrice(window.constants.PRICE_BY_TYPE[typeSelect.value]);
   };
 
-  typeSelect.addEventListener('change', onTypeSelectChange);
-
   var timeIn = document.querySelector('select[name="timein"]');
   var timeOut = document.querySelector('select[name="timeout"]');
 
@@ -37,14 +41,10 @@
     timeOut.value = timeOut.options[timeInSelectedIndex].value;
   };
 
-  timeIn.addEventListener('change', onTimeInChange);
-
   var onTimeOutChange = function () {
     var timeOutSelectedIndex = timeOut.options.selectedIndex;
     timeIn.value = timeIn.options[timeOutSelectedIndex].value;
   };
-
-  timeOut.addEventListener('change', onTimeOutChange);
 
   var rooms = document.querySelector('select[name="rooms"]');
   var capacity = document.querySelector('select[name="capacity"]');
@@ -57,8 +57,6 @@
     capacity.setCustomValidity(validity);
     capacity.reportValidity();
   };
-
-  capacity.addEventListener('change', onCapacityChange);
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');

@@ -18,7 +18,7 @@
     if (matches) {
       var reader = new FileReader();
 
-      reader.addEventListener('load', function () {
+      var onReaderLoad = function () {
         var result = reader.result;
         switch (fileChooser) {
           case avatarChooser:
@@ -32,7 +32,9 @@
             photoPreview.appendChild(imgElement);
             break;
         }
-      });
+      };
+
+      reader.addEventListener('load', onReaderLoad);
       reader.readAsDataURL(file);
     }
   };

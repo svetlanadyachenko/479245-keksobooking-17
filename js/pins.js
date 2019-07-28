@@ -30,14 +30,14 @@
 
     var filteredPins = ads.filter(function (ad) {
       var getFeature = function (features, feature) {
-        return Object.assign({}, features, {[feature] : true});
+        return Object.assign({}, features, {[feature]: true});
       };
       var housingFeatures = ad.offer.features.reduce(getFeature, {});
       var getPrice = function (price) {
         switch (true) {
-          case price < 10000:
+          case price < window.constants.LOW_PRICE:
             return 'low';
-          case price > 50000:
+          case price > window.constants.HIGH_PRICE:
             return 'high';
           default:
             return 'middle';
