@@ -38,6 +38,7 @@
       window.main.getDisabledElements(window.pins.mapFilters);
       window.pins.removeEventListenersInPins();
       window.main.activated = false;
+      window.main.mapPinMain.removeEventListener('keydown', onMainPinEnterPress);
     }
   };
 
@@ -51,5 +52,13 @@
 
   window.main.getDisabledElements(window.form.fieldsetInAdForm);
   window.main.getDisabledElements(window.pins.mapFilters);
+
+  var onMainPinEnterPress = function (evt) {
+    if (evt.keyCode === window.constants.ENTER_KEYCODE) {
+      window.main.getActiveMap();
+    }
+  };
+
+  window.main.mapPinMain.addEventListener('keydown', onMainPinEnterPress);
 
 })();

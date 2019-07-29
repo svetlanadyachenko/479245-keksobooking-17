@@ -10,6 +10,7 @@
     HIGH_PRICE: 50000,
     FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
     ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13,
     AD_QUANTITY: 5,
     MAX_PIN_ON_MAP: 5,
     MIN_PIN_ON_MAP: 0,
