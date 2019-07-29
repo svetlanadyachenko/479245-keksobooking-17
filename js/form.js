@@ -2,7 +2,7 @@
 (function () {
 
   window.form = {
-    adForm: document.querySelector('.ad-form'),
+    formElement: document.querySelector('.ad-form'),
     fieldsetInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
     addEventListenersInForm: function () {
@@ -19,7 +19,7 @@
     }
   };
 
-  window.form.adForm.classList.add('ad-form--disabled');
+  window.form.formElement.classList.add('ad-form--disabled');
 
   var typeSelect = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
@@ -79,7 +79,7 @@
     };
     success.addEventListener('click', onSuccessMessageClick);
     document.addEventListener('keydown', onSuccessMessageEscPress);
-    window.form.adForm.reset();
+    window.form.formElement.reset();
     window.pins.mapFilters.reset();
     window.render.closeCard();
     window.main.getDisabledMap();
@@ -112,14 +112,14 @@
   var resetButton = document.querySelector('.ad-form__reset');
 
   var onSubmitButtonClick = function (evt) {
-    window.backend.save(new FormData(window.form.adForm), saveHandler, errorHandler);
+    window.backend.save(new FormData(window.form.formElement), saveHandler, errorHandler);
     evt.preventDefault();
   };
 
-  window.form.adForm.addEventListener('submit', onSubmitButtonClick);
+  window.form.formElement.addEventListener('submit', onSubmitButtonClick);
 
   var onResetButtonClick = function () {
-    window.form.adForm.reset();
+    window.form.formElement.reset();
     window.pins.mapFilters.reset();
     window.render.closeCard();
     window.main.getDisabledMap();
