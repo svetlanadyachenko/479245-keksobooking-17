@@ -30,8 +30,10 @@
 
     var filteredPins = ads.filter(function (ad) {
       var getFeature = function (features, feature) {
-        return Object.assign({}, features, {[feature]: true});
+        features[feature] = true;
+        return Object.assign({}, features, {});
       };
+
       var housingFeatures = ad.offer.features.reduce(getFeature, {});
       var getPrice = function (price) {
         switch (true) {
@@ -49,6 +51,7 @@
         'housing-rooms': '' + ad.offer.rooms,
         'housing-guests': '' + ad.offer.guests
       };
+
       var assignedParams = Object.assign({}, housingParams, housingFeatures);
       return filterParams.every(function (param) {
         return assignedParams[param.name] === param.value;
