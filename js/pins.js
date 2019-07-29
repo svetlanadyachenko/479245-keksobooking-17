@@ -31,7 +31,7 @@
     var filteredPins = ads.filter(function (ad) {
       var getFeature = function (features, feature) {
         features[feature] = true;
-        return Object.assign({}, features, {});
+        return features;
       };
 
       var housingFeatures = ad.offer.features.reduce(getFeature, {});

@@ -549,6 +549,10 @@ fieldset {
   width: 150px;
 }
 
+.ad-form__field:focus {
+  outline: 2px solid #ffaa99;
+}
+
 .ad-form-header__info {
     margin-top: 0;
     margin-left: 20px;
