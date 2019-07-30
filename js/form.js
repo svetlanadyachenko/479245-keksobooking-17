@@ -58,6 +58,9 @@
     var validity = valid ? '' : 'Выбранное количество не подходит. Выберите другой вариант.';
     capacity.setCustomValidity(validity);
     capacity.reportValidity();
+    if (select.validity.valid) {
+      removeRedBorders();
+    }
   };
 
   var onCapacityChange = function (evt) {
@@ -119,17 +122,29 @@
 
   var resetButton = document.querySelector('.ad-form__reset');
   var allElements = window.form.formAd.querySelectorAll('input, select');
-  var errorCount = 0;
+
+  window.form.formAd.addEventListener('invalid', function () {
+    allElements.forEach(function (it) {
+      if (!it.validity.valid) {
+        it.setAttribute('style', 'border: 2px solid red;');
+      } else {
+        it.removeAttribute('style');
+      }
+    });
+  }, true);
 
   var onSubmitButtonClick = function (evt) {
     evt.preventDefault();
-    checkBeforeSending();
-    if (errorCount === 0) {
-      window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
-    }
+    window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
   };
 
   window.form.formAd.addEventListener('submit', onSubmitButtonClick);
+
+  var removeRedBorders = function () {
+    allElements.forEach(function (it) {
+      it.removeAttribute('style');
+    });
+  };
 
   var onResetButtonClick = function () {
     window.main.getClearPage();
@@ -137,27 +152,5 @@
   };
 
   resetButton.addEventListener('click', onResetButtonClick);
-
-  var checkForm = function (elementsOfForm) {
-    errorCount = 0;
-    elementsOfForm.forEach(function (it) {
-      if (!it.validity.valid) {
-        it.setAttribute('style', 'border: 2px solid red;');
-        errorCount = errorCount + 1;
-      } else {
-        it.removeAttribute('style');
-      }
-    });
-  };
-
-  var checkBeforeSending = function () {
-    checkForm(allElements);
-  };
-
-  var removeRedBorders = function () {
-    allElements.forEach(function (it) {
-      it.removeAttribute('style');
-    });
-  };
 
 })();
