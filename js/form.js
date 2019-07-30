@@ -2,31 +2,33 @@
 (function () {
 
   window.form = {
-    formElement: document.querySelector('.ad-form'),
-    fieldsetInAdForm: document.querySelectorAll('fieldset'),
+    formAd: document.querySelector('.ad-form'),
+    fieldsetsInAdForm: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
-    addEventListenersInForm: function () {
+    addEventListenersOnForm: function () {
       typeSelect.addEventListener('change', onTypeSelectChange);
       timeIn.addEventListener('change', onTimeInChange);
       timeOut.addEventListener('change', onTimeOutChange);
       capacity.addEventListener('change', onCapacityChange);
+      rooms.addEventListener('change', onRoomsChange);
     },
-    removeEventListenersInForm: function () {
+    removeEventListenersOnForm: function () {
       typeSelect.removeEventListener('change', onTypeSelectChange);
       timeIn.removeEventListener('change', onTimeInChange);
       timeOut.removeEventListener('change', onTimeOutChange);
       capacity.removeEventListener('change', onCapacityChange);
+      rooms.removeEventListener('change', onRoomsChange);
     }
   };
 
-  window.form.formElement.classList.add('ad-form--disabled');
+  window.form.formAd.classList.add('ad-form--disabled');
 
   var typeSelect = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
 
-  var setAttributeForPrice = function (type) {
-    price.setAttribute('placeholder', type);
-    price.setAttribute('min', type);
+  var setAttributeForPrice = function (value) {
+    price.setAttribute('placeholder', value);
+    price.setAttribute('min', value);
   };
 
   var onTypeSelectChange = function () {
@@ -58,11 +60,20 @@
     capacity.reportValidity();
   };
 
+  var onRoomsChange = function (evt) {
+    var selectedIndex = evt.target.selectedIndex;
+    var allowed = window.constants.ROOMS_BY_CAPACITY[capacity.value].allowed;
+    var valid = allowed.includes(selectedIndex);
+    var validity = valid ? '' : 'Выбранное количество комнат не подходит. Выберите другой вариант.';
+    rooms.setCustomValidity(validity);
+    rooms.reportValidity();
+  };
+
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
   var main = document.querySelector('main');
 
-  var saveHandler = function () {
+  var onSaveData = function () {
     var success = successTemplate.cloneNode(true);
     main.appendChild(success);
     var closeSuccessMessage = function () {
@@ -77,15 +88,13 @@
     var onSuccessMessageClick = function () {
       closeSuccessMessage();
     };
+
     success.addEventListener('click', onSuccessMessageClick);
     document.addEventListener('keydown', onSuccessMessageEscPress);
-    window.form.formElement.reset();
-    window.pins.mapFilters.reset();
-    window.render.closeCard();
-    window.main.getDisabledMap();
+    window.main.getClearPage();
   };
 
-  var errorHandler = function () {
+  var onErrorMessageInForm = function () {
     var error = errorTemplate.cloneNode(true);
     main.appendChild(error);
     var errorButton = error.querySelector('.error__button');
@@ -112,19 +121,50 @@
   var resetButton = document.querySelector('.ad-form__reset');
 
   var onSubmitButtonClick = function (evt) {
-    window.backend.save(new FormData(window.form.formElement), saveHandler, errorHandler);
+    checkBeforeSending();
+    window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
     evt.preventDefault();
   };
 
-  window.form.formElement.addEventListener('submit', onSubmitButtonClick);
+  window.form.formAd.addEventListener('submit', onSubmitButtonClick);
 
   var onResetButtonClick = function () {
-    window.form.formElement.reset();
-    window.pins.mapFilters.reset();
-    window.render.closeCard();
-    window.main.getDisabledMap();
+    window.main.getClearPage();
+    removeRedBorders();
   };
 
   resetButton.addEventListener('click', onResetButtonClick);
+
+  var allInputs = window.form.formAd.querySelectorAll('input');
+  var allSelects = window.form.formAd.querySelectorAll('select');
+
+  var checkForm = function (elementsOfForm) {
+    elementsOfForm.forEach(function (it) {
+      if (!it.valid) {
+        it.setAttribute('style', 'border: 2px solid red;');
+      } else {
+        it.removeAttribute('style');
+      }
+    });
+  };
+
+  var checkInputs = function () {
+    checkForm(allInputs);
+  };
+
+  var checkSelects = function () {
+    checkForm(allSelects);
+  };
+
+  var checkBeforeSending = function () {
+    checkInputs();
+    checkSelects();
+  };
+
+  var removeRedBorders = function () {
+    for (var i = 0; i < allInputs.length; i++) {
+      allInputs[i].removeAttribute('style');
+    }
+  };
 
 })();

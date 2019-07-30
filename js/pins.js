@@ -2,10 +2,14 @@
 (function () {
   window.pins = {
     mapFilters: document.querySelector('.map__filters'),
+    filters: document.querySelectorAll('.map__filter, .map__checkbox'),
     appendNewAds: function () {
-      window.backend.load(loadHandler, errorPinHandler);
+      window.backend.load(onLoadData, onErrorMessage);
     },
-    removeEventListenersInPins: function () {
+    addEventListenersOnFilters: function () {
+      window.pins.mapFilters.addEventListener('change', onFilterChange);
+    },
+    removeEventListenerOnFilters: function () {
       window.pins.mapFilters.removeEventListener('change', onFilterChange);
     }
   };
@@ -28,21 +32,21 @@
 
     var filterParams = getFilterParams(nodesFilters);
 
-    var filteredPins = ads.filter(function (ad) {
-      var getFeature = function (features, feature) {
-        features[feature] = true;
-        return features;
-      };
+    var getFeature = function (features, feature) {
+      features[feature] = true;
+      return features;
+    };
 
+    var filteredPins = ads.filter(function (ad) {
       var housingFeatures = ad.offer.features.reduce(getFeature, {});
       var getPrice = function (price) {
         switch (true) {
           case price < window.constants.LOW_PRICE:
-            return 'low';
+            return window.constants.PRICE_LOW_VALUE;
           case price > window.constants.HIGH_PRICE:
-            return 'high';
+            return window.constants.PRICE_HIGH_VALUE;
           default:
-            return 'middle';
+            return window.constants.PRICE_MIDDLE_VALUE;
         }
       };
       var housingParams = {
@@ -67,14 +71,13 @@
     updateAds();
   };
 
-  window.pins.mapFilters.addEventListener('change', onFilterChange);
-
-  var loadHandler = function (data) {
+  var onLoadData = function (data) {
     ads = data;
     updateAds();
+    window.main.removeDisabledElements(window.pins.filters);
   };
 
-  var errorPinHandler = function (errorMessage) {
+  var onErrorMessage = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';

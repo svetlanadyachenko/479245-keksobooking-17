@@ -39,14 +39,16 @@
     }
   };
 
-  avatarChooser.addEventListener('change', onLoadChange);
-  photoChooser.addEventListener('change', onLoadChange);
+  var addChangeEventListener = function (element) {
+    element.addEventListener('change', onLoadChange);
+  };
+
+  addChangeEventListener(avatarChooser);
+  addChangeEventListener(photoChooser);
 
   window.resetPhoto = function () {
-    if (avatarPreview.src !== 'img/muffin-grey.svg') {
-      avatarPreview.src = 'img/muffin-grey.svg';
-    }
-    var allImages = Array.from(photoPreview.querySelectorAll('img'));
+    avatarPreview.src = 'img/muffin-grey.svg';
+    var allImages = photoPreview.querySelectorAll('img');
     allImages.forEach(function (it) {
       it.remove();
     });
