@@ -51,22 +51,21 @@
   var rooms = document.querySelector('select[name="rooms"]');
   var capacity = document.querySelector('select[name="capacity"]');
 
-  var onCapacityChange = function (evt) {
+  var onSelectChange = function (evt, array, select) {
     var selectedIndex = evt.target.selectedIndex;
-    var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
-    var capacityValid = allowed.includes(selectedIndex);
-    var capacityValidity = capacityValid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
-    capacity.setCustomValidity(capacityValidity);
+    var allowed = array[select.value].allowed;
+    var valid = allowed.includes(selectedIndex);
+    var validity = valid ? '' : 'Выбранное количество не подходит. Выберите другой вариант.';
+    capacity.setCustomValidity(validity);
     capacity.reportValidity();
   };
 
+  var onCapacityChange = function (evt) {
+    onSelectChange(evt, window.constants.CAPACITY_BY_ROOMS, rooms);
+  };
+
   var onRoomsChange = function (evt) {
-    var selectedIndex = evt.target.selectedIndex;
-    var allowed = window.constants.ROOMS_BY_CAPACITY[capacity.value].allowed;
-    var roomsValid = allowed.includes(selectedIndex);
-    var roomsValidity = roomsValid ? '' : 'Выбранное количество комнат не подходит. Выберите другой вариант.';
-    rooms.setCustomValidity(roomsValidity);
-    rooms.reportValidity();
+    onSelectChange(evt, window.constants.ROOMS_BY_CAPACITY, capacity);
   };
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
@@ -123,10 +122,10 @@
   var errorCount = 0;
 
   var onSubmitButtonClick = function (evt) {
+    evt.preventDefault();
     checkBeforeSending();
     if (errorCount === 0) {
       window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
-      evt.preventDefault();
     }
   };
 
