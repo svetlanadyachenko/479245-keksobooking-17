@@ -150,12 +150,8 @@
     });
   };
 
-  var checkElements = function () {
-    checkForm(allElements);
-  };
-
   var checkBeforeSending = function () {
-    checkElements();
+    checkForm(allElements);
   };
 
   var removeRedBorders = function () {
