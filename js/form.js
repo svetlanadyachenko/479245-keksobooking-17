@@ -54,18 +54,18 @@
   var onCapacityChange = function (evt) {
     var selectedIndex = evt.target.selectedIndex;
     var allowed = window.constants.CAPACITY_BY_ROOMS[rooms.value].allowed;
-    var valid = allowed.includes(selectedIndex);
-    var validity = valid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
-    capacity.setCustomValidity(validity);
+    var capacityValid = allowed.includes(selectedIndex);
+    var capacityValidity = capacityValid ? '' : 'Выбранное количество гостей не подходит. Выберите другой вариант.';
+    capacity.setCustomValidity(capacityValidity);
     capacity.reportValidity();
   };
 
   var onRoomsChange = function (evt) {
     var selectedIndex = evt.target.selectedIndex;
     var allowed = window.constants.ROOMS_BY_CAPACITY[capacity.value].allowed;
-    var valid = allowed.includes(selectedIndex);
-    var validity = valid ? '' : 'Выбранное количество комнат не подходит. Выберите другой вариант.';
-    rooms.setCustomValidity(validity);
+    var roomsValid = allowed.includes(selectedIndex);
+    var roomsValidity = roomsValid ? '' : 'Выбранное количество комнат не подходит. Выберите другой вариант.';
+    rooms.setCustomValidity(roomsValidity);
     rooms.reportValidity();
   };
 
@@ -119,11 +119,15 @@
   };
 
   var resetButton = document.querySelector('.ad-form__reset');
+  var allElements = window.form.formAd.querySelectorAll('input, select');
+  var errorCount = 0;
 
   var onSubmitButtonClick = function (evt) {
     checkBeforeSending();
-    window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
-    evt.preventDefault();
+    if (errorCount === 0) {
+      window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
+      evt.preventDefault();
+    }
   };
 
   window.form.formAd.addEventListener('submit', onSubmitButtonClick);
@@ -135,36 +139,30 @@
 
   resetButton.addEventListener('click', onResetButtonClick);
 
-  var allInputs = window.form.formAd.querySelectorAll('input');
-  var allSelects = window.form.formAd.querySelectorAll('select');
-
   var checkForm = function (elementsOfForm) {
+    errorCount = 0;
     elementsOfForm.forEach(function (it) {
-      if (!it.valid) {
+      if (!it.validity.valid) {
         it.setAttribute('style', 'border: 2px solid red;');
+        errorCount = errorCount + 1;
       } else {
         it.removeAttribute('style');
       }
     });
   };
 
-  var checkInputs = function () {
-    checkForm(allInputs);
-  };
-
-  var checkSelects = function () {
-    checkForm(allSelects);
+  var checkElements = function () {
+    checkForm(allElements);
   };
 
   var checkBeforeSending = function () {
-    checkInputs();
-    checkSelects();
+    checkElements();
   };
 
   var removeRedBorders = function () {
-    for (var i = 0; i < allInputs.length; i++) {
-      allInputs[i].removeAttribute('style');
-    }
+    allElements.forEach(function (it) {
+      it.removeAttribute('style');
+    });
   };
 
 })();
