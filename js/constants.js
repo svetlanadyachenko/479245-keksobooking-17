@@ -2,8 +2,18 @@
 (function () {
 
   window.constants = {
-    TYPES: ['palace', 'flat', 'house', 'bungalo'],
+    URL_LOAD: 'https://js.dump.academy/keksobooking/data',
+    URL_SAVE: 'https://js.dump.academy/keksobooking',
+    TIMEOUT: 10000,
+    DEBOUNCE_INTERVAL: 500,
+    LOW_PRICE: 10000,
+    HIGH_PRICE: 50000,
+    PRICE_LOW_VALUE: 'low',
+    PRICE_MIDDLE_VALUE: 'middle',
+    PRICE_HIGH_VALUE: 'high',
+    FILE_TYPES: ['gif', 'jpg', 'jpeg', 'png'],
     ESC_KEYCODE: 27,
+    ENTER_KEYCODE: 13,
     AD_QUANTITY: 5,
     MAX_PIN_ON_MAP: 5,
     MIN_PIN_ON_MAP: 0,
@@ -40,6 +50,20 @@
         allowed: [2, 1, 0]
       },
       100: {
+        allowed: [3]
+      }
+    },
+    ROOMS_BY_CAPACITY: {
+      3: {
+        allowed: [2]
+      },
+      2: {
+        allowed: [1, 2]
+      },
+      1: {
+        allowed: [0, 1, 2]
+      },
+      0: {
         allowed: [3]
       }
     }
