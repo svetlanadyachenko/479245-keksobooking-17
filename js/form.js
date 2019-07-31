@@ -11,6 +11,7 @@
       timeOut.addEventListener('change', onTimeOutChange);
       capacity.addEventListener('change', onCapacityChange);
       rooms.addEventListener('change', onRoomsChange);
+      window.form.formAd.addEventListener('change', onFormChange);
     },
     removeEventListenersOnForm: function () {
       typeSelect.removeEventListener('change', onTypeSelectChange);
@@ -18,6 +19,7 @@
       timeOut.removeEventListener('change', onTimeOutChange);
       capacity.removeEventListener('change', onCapacityChange);
       rooms.removeEventListener('change', onRoomsChange);
+      window.form.formAd.removeEventListener('change', onFormChange);
     }
   };
 
@@ -58,9 +60,6 @@
     var validity = valid ? '' : 'Выбранное количество не подходит. Выберите другой вариант.';
     capacity.setCustomValidity(validity);
     capacity.reportValidity();
-    if (select.validity.valid) {
-      removeRedBorders();
-    }
   };
 
   var onCapacityChange = function (evt) {
@@ -125,11 +124,7 @@
 
   window.form.formAd.addEventListener('invalid', function (evt) {
     var target = evt.target;
-    if (!target.validity.valid) {
-      target.setAttribute('style', 'border: 2px solid red;');
-    } else {
-      target.removeAttribute('style');
-    }
+    target.setAttribute('style', 'border: 2px solid red;');
   }, true);
 
   var onSubmitButtonClick = function (evt) {
@@ -138,6 +133,10 @@
   };
 
   window.form.formAd.addEventListener('submit', onSubmitButtonClick);
+
+  var onFormChange = function () {
+    removeRedBorders();
+  };
 
   var removeRedBorders = function () {
     allElements.forEach(function (it) {
