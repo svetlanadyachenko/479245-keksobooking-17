@@ -123,14 +123,13 @@
   var resetButton = document.querySelector('.ad-form__reset');
   var allElements = window.form.formAd.querySelectorAll('input, select');
 
-  window.form.formAd.addEventListener('invalid', function () {
-    allElements.forEach(function (it) {
-      if (!it.validity.valid) {
-        it.setAttribute('style', 'border: 2px solid red;');
-      } else {
-        it.removeAttribute('style');
-      }
-    });
+  window.form.formAd.addEventListener('invalid', function (evt) {
+    var target = evt.target;
+    if (!target.validity.valid) {
+      target.setAttribute('style', 'border: 2px solid red;');
+    } else {
+      target.removeAttribute('style');
+    }
   }, true);
 
   var onSubmitButtonClick = function (evt) {
