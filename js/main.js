@@ -20,9 +20,9 @@
       window.main.mapPinMain.removeEventListener('keydown', onMainPinEnterPress);
       window.render.map.classList.remove('map--faded');
       window.pins.appendNewAds();
-      window.form.formAd.classList.remove('ad-form--disabled');
-      window.main.removeDisabledElements(window.form.fieldsetsInAdForm);
-      window.form.addEventListenersOnForm();
+      window.form.newAd.classList.remove('ad-form--disabled');
+      window.main.removeDisabledElements(window.form.fieldsets);
+      window.form.addEventListenersOnSelects();
       window.pins.addEventListenersOnFilters();
       window.main.activated = true;
     },
@@ -32,15 +32,15 @@
       window.render.removePins();
       getMapPinMainPosition();
       window.resetPhoto();
-      window.form.formAd.classList.add('ad-form--disabled');
-      window.main.getDisabledElements(window.form.fieldsetsInAdForm);
+      window.form.newAd.classList.add('ad-form--disabled');
+      window.main.getDisabledElements(window.form.fieldsets);
       window.main.getDisabledElements(window.pins.filters);
-      window.form.removeEventListenersOnForm();
+      window.form.removeEventListenersOnSelects();
       window.pins.removeEventListenerOnFilters();
       window.main.activated = false;
     },
     getClearPage: function () {
-      window.form.formAd.reset();
+      window.form.newAd.reset();
       window.pins.mapFilters.reset();
       window.render.closeCard();
       window.main.getDisabledMap();
@@ -55,7 +55,7 @@
 
   getMapPinMainPosition();
 
-  window.main.getDisabledElements(window.form.fieldsetsInAdForm);
+  window.main.getDisabledElements(window.form.fieldsets);
   window.main.getDisabledElements(window.pins.filters);
 
   var onMainPinEnterPress = function (evt) {

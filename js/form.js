@@ -2,28 +2,28 @@
 (function () {
 
   window.form = {
-    formAd: document.querySelector('.ad-form'),
-    fieldsetsInAdForm: document.querySelectorAll('fieldset'),
+    newAd: document.querySelector('.ad-form'),
+    fieldsets: document.querySelectorAll('fieldset'),
     addressInput: document.querySelector('input[name="address"]'),
-    addEventListenersOnForm: function () {
+    addEventListenersOnSelects: function () {
       typeSelect.addEventListener('change', onTypeSelectChange);
       timeIn.addEventListener('change', onTimeInChange);
       timeOut.addEventListener('change', onTimeOutChange);
       capacity.addEventListener('change', onCapacityChange);
       rooms.addEventListener('change', onRoomsChange);
-      window.form.formAd.addEventListener('change', onFormChange);
+      window.form.newAd.addEventListener('change', onFormChange);
     },
-    removeEventListenersOnForm: function () {
+    removeEventListenersOnSelects: function () {
       typeSelect.removeEventListener('change', onTypeSelectChange);
       timeIn.removeEventListener('change', onTimeInChange);
       timeOut.removeEventListener('change', onTimeOutChange);
       capacity.removeEventListener('change', onCapacityChange);
       rooms.removeEventListener('change', onRoomsChange);
-      window.form.formAd.removeEventListener('change', onFormChange);
+      window.form.newAd.removeEventListener('change', onFormChange);
     }
   };
 
-  window.form.formAd.classList.add('ad-form--disabled');
+  window.form.newAd.classList.add('ad-form--disabled');
 
   var typeSelect = document.querySelector('select[name="type"]');
   var price = document.querySelector('input[name="price"]');
@@ -120,19 +120,19 @@
   };
 
   var resetButton = document.querySelector('.ad-form__reset');
-  var allElements = window.form.formAd.querySelectorAll('input, select');
+  var allElements = window.form.newAd.querySelectorAll('input, select');
 
-  window.form.formAd.addEventListener('invalid', function (evt) {
+  window.form.newAd.addEventListener('invalid', function (evt) {
     var target = evt.target;
     target.setAttribute('style', 'border: 2px solid red;');
   }, true);
 
   var onSubmitButtonClick = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(window.form.formAd), onSaveData, onErrorMessageInForm);
+    window.backend.save(new FormData(window.form.newAd), onSaveData, onErrorMessageInForm);
   };
 
-  window.form.formAd.addEventListener('submit', onSubmitButtonClick);
+  window.form.newAd.addEventListener('submit', onSubmitButtonClick);
 
   var onFormChange = function () {
     removeRedBorders();

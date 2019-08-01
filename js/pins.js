@@ -63,12 +63,14 @@
     });
 
     window.render.removePins();
-    window.render.renderPins(filteredPins);
+    // window.render.renderPins(filteredPins);
+    window.debounce(window.render.renderPins(filteredPins));
   };
 
   var onFilterChange = function () {
     window.render.closeCard();
     updateAds();
+    // window.debounce(updateAds());
   };
 
   var onLoadData = function (data) {
