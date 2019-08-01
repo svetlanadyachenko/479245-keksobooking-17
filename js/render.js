@@ -90,10 +90,10 @@
 
   window.render = {
     map: document.querySelector('.map'),
-    renderPins: function (data) {
+    createPins: window.debounce(function (data) {
       var limitData = data.slice(window.constants.MIN_PIN_ON_MAP, window.constants.MAX_PIN_ON_MAP);
       similarList.appendChild(getFragment(limitData));
-    },
+    }),
     removePins: function () {
       var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
       pins.forEach(function (it) {

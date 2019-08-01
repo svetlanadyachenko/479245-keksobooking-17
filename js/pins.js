@@ -63,8 +63,8 @@
     });
 
     window.render.removePins();
-    // window.render.renderPins(filteredPins);
-    window.debounce(window.render.renderPins(filteredPins));
+    window.render.createPins(filteredPins);
+    // window.debounce(window.render.createPins(filteredPins));
   };
 
   var onFilterChange = function () {

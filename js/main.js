@@ -5,7 +5,7 @@
 
   window.main = {
     activated: false,
-    mapPinMain: document.querySelector('.map__pin--main'),
+    mapPin: document.querySelector('.map__pin--main'),
     getDisabledElements: function (elements) {
       elements.forEach(function (it) {
         it.setAttribute('disabled', 'disabled');
@@ -17,7 +17,7 @@
       });
     },
     getActiveMap: function () {
-      window.main.mapPinMain.removeEventListener('keydown', onMainPinEnterPress);
+      window.main.mapPin.removeEventListener('keydown', onMainPinEnterPress);
       window.render.map.classList.remove('map--faded');
       window.pins.appendNewAds();
       window.form.newAd.classList.remove('ad-form--disabled');
@@ -27,10 +27,10 @@
       window.main.activated = true;
     },
     getDisabledMap: function () {
-      window.main.mapPinMain.addEventListener('keydown', onMainPinEnterPress);
+      window.main.mapPin.addEventListener('keydown', onMainPinEnterPress);
       window.render.map.classList.add('map--faded');
       window.render.removePins();
-      getMapPinMainPosition();
+      getMapPinPosition();
       window.resetPhoto();
       window.form.newAd.classList.add('ad-form--disabled');
       window.main.getDisabledElements(window.form.fieldsets);
@@ -47,13 +47,13 @@
     }
   };
 
-  var getMapPinMainPosition = function () {
-    window.main.mapPinMain.style.left = (window.constants.MAP_PIN_MAIN_X) + 'px';
-    window.main.mapPinMain.style.top = (window.constants.MAP_PIN_MAIN_Y) + 'px';
+  var getMapPinPosition = function () {
+    window.main.mapPin.style.left = (window.constants.MAP_PIN_MAIN_X) + 'px';
+    window.main.mapPin.style.top = (window.constants.MAP_PIN_MAIN_Y) + 'px';
     window.form.addressInput.value = (window.constants.MAP_PIN_MAIN_X + window.constants.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (window.constants.MAP_PIN_MAIN_Y + window.constants.MAP_PIN_MAIN_HEIGHT);
   };
 
-  getMapPinMainPosition();
+  getMapPinPosition();
 
   window.main.getDisabledElements(window.form.fieldsets);
   window.main.getDisabledElements(window.pins.filters);
@@ -64,6 +64,6 @@
     }
   };
 
-  window.main.mapPinMain.addEventListener('keydown', onMainPinEnterPress);
+  window.main.mapPin.addEventListener('keydown', onMainPinEnterPress);
 
 })();

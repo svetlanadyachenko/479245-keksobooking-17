@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-  window.main.mapPinMain.addEventListener('mousedown', function (evt) {
+  window.main.mapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -22,8 +22,8 @@
         y: moveEvt.clientY
       };
 
-      var mapPinNewXCoords = window.main.mapPinMain.offsetLeft - shift.x;
-      var mapPinNewYCoords = window.main.mapPinMain.offsetTop - shift.y;
+      var mapPinNewXCoords = window.main.mapPin.offsetLeft - shift.x;
+      var mapPinNewYCoords = window.main.mapPin.offsetTop - shift.y;
 
       if ((mapPinNewXCoords > window.constants.X_LAST_COORDINATE - window.constants.MAP_PIN_MAIN_WIDTH / 2) ||
             (mapPinNewXCoords < window.constants.X_FIRST_COORDINATE - window.constants.MAP_PIN_MAIN_WIDTH / 2) ||
@@ -32,8 +32,8 @@
         return;
       }
 
-      window.main.mapPinMain.style.left = (mapPinNewXCoords) + 'px';
-      window.main.mapPinMain.style.top = (mapPinNewYCoords) + 'px';
+      window.main.mapPin.style.left = (mapPinNewXCoords) + 'px';
+      window.main.mapPin.style.top = (mapPinNewYCoords) + 'px';
       window.form.addressInput.value = (mapPinNewXCoords + window.constants.MAP_PIN_MAIN_WIDTH / 2) + ', ' + (mapPinNewYCoords + window.constants.MAP_PIN_MAIN_HEIGHT);
 
     };
